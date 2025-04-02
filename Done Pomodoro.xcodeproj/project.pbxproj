@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E00455EB2D9CEC2100042024 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455EA2D9CEC2100042024 /* Constants.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E004558E2D9B931200042024 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -28,6 +32,7 @@
 		E004558D2D9B931200042024 /* Done PomodoroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Done PomodoroTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E00455972D9B931200042024 /* Done PomodoroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Done PomodoroUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E00455AF2D9B97C900042024 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		E00455EA2D9CEC2100042024 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -76,14 +81,11 @@
 		E004556F2D9B931000042024 = {
 			isa = PBXGroup;
 			children = (
-				E00455B72D9B98DB00042024 /* Notification System */,
-				E00455B62D9B98D300042024 /* Data Layer */,
-				E00455B52D9B98C900042024 /* Reports Module */,
-				E00455B42D9B98BB00042024 /* Settings Module */,
-				E00455B32D9B98AE00042024 /* Task Management Module */,
-				E00455B22D9B98A500042024 /* Timer Module */,
-				E00455B12D9B989B00042024 /* Common */,
 				E00455B02D9B988E00042024 /* App Core */,
+				E00455B12D9B989B00042024 /* Common */,
+				E00455E62D9CE71600042024 /* Modules */,
+				E00455B62D9B98D300042024 /* Data */,
+				E00455B72D9B98DB00042024 /* Notifications */,
 				E00455AF2D9B97C900042024 /* .gitignore */,
 				E004557A2D9B931000042024 /* Done Pomodoro */,
 				E00455902D9B931200042024 /* Done PomodoroTests */,
@@ -112,98 +114,62 @@
 		E00455B12D9B989B00042024 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				E00455BB2D9B990500042024 /* Components */,
-				E00455BA2D9B98FD00042024 /* Utilities */,
-				E00455B92D9B98F600042024 /* Extensions */,
-				E00455B82D9B98EF00042024 /* Constants */,
+				E00455EA2D9CEC2100042024 /* Constants.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
 		};
-		E00455B22D9B98A500042024 /* Timer Module */ = {
+		E00455B22D9B98A500042024 /* Timer */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = "Timer Module";
+			path = Timer;
 			sourceTree = "<group>";
 		};
-		E00455B32D9B98AE00042024 /* Task Management Module */ = {
+		E00455B32D9B98AE00042024 /* TaskManagement */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = "Task Management Module";
+			path = TaskManagement;
 			sourceTree = "<group>";
 		};
-		E00455B42D9B98BB00042024 /* Settings Module */ = {
+		E00455B42D9B98BB00042024 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = "Settings Module";
+			path = Settings;
 			sourceTree = "<group>";
 		};
-		E00455B52D9B98C900042024 /* Reports Module */ = {
+		E00455B52D9B98C900042024 /* Reports */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = "Reports Module";
+			path = Reports;
 			sourceTree = "<group>";
 		};
-		E00455B62D9B98D300042024 /* Data Layer */ = {
+		E00455B62D9B98D300042024 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				E00455BD2D9B991E00042024 /* Repositories */,
-				E00455BC2D9B991400042024 /* Models */,
 			);
-			path = "Data Layer";
+			path = Data;
 			sourceTree = "<group>";
 		};
-		E00455B72D9B98DB00042024 /* Notification System */ = {
+		E00455B72D9B98DB00042024 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = "Notification System";
+			path = Notifications;
 			sourceTree = "<group>";
 		};
-		E00455B82D9B98EF00042024 /* Constants */ = {
+		E00455E62D9CE71600042024 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				E00455B22D9B98A500042024 /* Timer */,
+				E00455B32D9B98AE00042024 /* TaskManagement */,
+				E00455B42D9B98BB00042024 /* Settings */,
+				E00455B52D9B98C900042024 /* Reports */,
 			);
-			path = Constants;
-			sourceTree = "<group>";
-		};
-		E00455B92D9B98F600042024 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		E00455BA2D9B98FD00042024 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
-		E00455BB2D9B990500042024 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Components;
-			sourceTree = "<group>";
-		};
-		E00455BC2D9B991400042024 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		E00455BD2D9B991E00042024 /* Repositories */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Repositories;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -350,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E00455EB2D9CEC2100042024 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

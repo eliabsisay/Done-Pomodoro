@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		E00455EB2D9CEC2100042024 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455EA2D9CEC2100042024 /* Constants.swift */; };
+		E00455ED2D9CF34600042024 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455EC2D9CF34600042024 /* Color+Extensions.swift */; };
+		E00455EF2D9CF48900042024 /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455EE2D9CF48900042024 /* Font+Extensions.swift */; };
+		E00455F22D9CF63000042024 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E00455F02D9CF63000042024 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +36,9 @@
 		E00455972D9B931200042024 /* Done PomodoroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Done PomodoroUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E00455AF2D9B97C900042024 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		E00455EA2D9CEC2100042024 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E00455EC2D9CF34600042024 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		E00455EE2D9CF48900042024 /* Font+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extensions.swift"; sourceTree = "<group>"; };
+		E00455F12D9CF63000042024 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -115,6 +121,9 @@
 			isa = PBXGroup;
 			children = (
 				E00455EA2D9CEC2100042024 /* Constants.swift */,
+				E00455EC2D9CF34600042024 /* Color+Extensions.swift */,
+				E00455EE2D9CF48900042024 /* Font+Extensions.swift */,
+				E00455F02D9CF63000042024 /* Localizable.strings */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -272,6 +281,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"es-US",
 			);
 			mainGroup = E004556F2D9B931000042024;
 			minimizedProjectReferenceProxies = 1;
@@ -292,6 +302,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E00455F22D9CF63000042024 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +328,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E00455EB2D9CEC2100042024 /* Constants.swift in Sources */,
+				E00455EF2D9CF48900042024 /* Font+Extensions.swift in Sources */,
+				E00455ED2D9CF34600042024 /* Color+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,12 +362,24 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		E00455F02D9CF63000042024 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E00455F12D9CF63000042024 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		E004559F2D9B931200042024 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -418,6 +443,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

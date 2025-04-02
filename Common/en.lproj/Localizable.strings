@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  Done Pomodoro
+
+  Created by Eliab Sisay on 4/1/25.
+  
+*/
+
+"welcome_message" = "Welcome to Done!";
+"getting_started" = "Let's get started.";
+"task_placeholder" = "What are you working on?";

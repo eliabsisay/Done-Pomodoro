@@ -13,9 +13,10 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 Text("Pomodoro Timer")
-                    .font(.largeTitle)
+                    .font(.headingXL)
+                    .foregroundStyle(Color.primaryColor)
                 Text("App is being set up...")
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color.secondaryColor)
             }
             .navigationTitle("Pomodoro Timer")
         }

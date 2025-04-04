@@ -14,7 +14,6 @@ enum Constants {
     enum UserDefaultsKeys {
         static let hasCompletedOnboarding = "hasCompletedOnboarding"
         static let hasCreatedDefaultTask = "hasCreatedDefaultTask"
-        static let darkMode = "darkMode"
         static let hideStatusBar = "hideStatusBar"
         static let preventSleep = "preventSleep"
         static let workCompletedSound = "workCompletedSound"
@@ -23,7 +22,16 @@ enum Constants {
         static let reportViewType = "reportViewType"
         static let reportUnits = "reportUnits"
         static let reportPeriod = "reportPeriod"
+        static let appearanceMode = "appearanceMode"
     }
+    
+    /// UI Mode
+    enum AppearanceMode: String {
+        case system
+        case light
+        case dark
+    }
+
     
     /// Identifiers for local notifications
     enum NotificationConstants {

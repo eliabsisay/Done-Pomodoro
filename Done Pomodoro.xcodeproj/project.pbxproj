@@ -11,6 +11,12 @@
 		E00455ED2D9CF34600042024 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455EC2D9CF34600042024 /* Color+Extensions.swift */; };
 		E00455EF2D9CF48900042024 /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455EE2D9CF48900042024 /* Font+Extensions.swift */; };
 		E00455F22D9CF63000042024 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E00455F02D9CF63000042024 /* Localizable.strings */; };
+		E00455FA2D9F09A500042024 /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455F92D9F09A500042024 /* TaskRepository.swift */; };
+		E00455FC2D9F169F00042024 /* WorkSessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455FB2D9F169F00042024 /* WorkSessionRepository.swift */; };
+		E00455FE2D9F1A6500042024 /* DataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455FD2D9F1A6500042024 /* DataSeeder.swift */; };
+		E00456002D9F41FD00042024 /* TimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455FF2D9F41FD00042024 /* TimerService.swift */; };
+		E00456022D9F452F00042024 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456012D9F452F00042024 /* NotificationService.swift */; };
+		E00456042D9F4E1E00042024 /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456032D9F4E1E00042024 /* SettingService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +45,12 @@
 		E00455EC2D9CF34600042024 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		E00455EE2D9CF48900042024 /* Font+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extensions.swift"; sourceTree = "<group>"; };
 		E00455F12D9CF63000042024 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E00455F92D9F09A500042024 /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
+		E00455FB2D9F169F00042024 /* WorkSessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSessionRepository.swift; sourceTree = "<group>"; };
+		E00455FD2D9F1A6500042024 /* DataSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSeeder.swift; sourceTree = "<group>"; };
+		E00455FF2D9F41FD00042024 /* TimerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerService.swift; sourceTree = "<group>"; };
+		E00456012D9F452F00042024 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		E00456032D9F4E1E00042024 /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -113,6 +125,8 @@
 		E00455B02D9B988E00042024 /* App Core */ = {
 			isa = PBXGroup;
 			children = (
+				E00455FF2D9F41FD00042024 /* TimerService.swift */,
+				E00456032D9F4E1E00042024 /* SettingService.swift */,
 			);
 			path = "App Core";
 			sourceTree = "<group>";
@@ -159,6 +173,8 @@
 		E00455B62D9B98D300042024 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				E00455F52D9F092800042024 /* Repositories */,
+				E00455FD2D9F1A6500042024 /* DataSeeder.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -166,6 +182,7 @@
 		E00455B72D9B98DB00042024 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				E00456012D9F452F00042024 /* NotificationService.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -179,6 +196,15 @@
 				E00455B52D9B98C900042024 /* Reports */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		E00455F52D9F092800042024 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				E00455F92D9F09A500042024 /* TaskRepository.swift */,
+				E00455FB2D9F169F00042024 /* WorkSessionRepository.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,7 +354,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E00455EB2D9CEC2100042024 /* Constants.swift in Sources */,
+				E00455FA2D9F09A500042024 /* TaskRepository.swift in Sources */,
+				E00455FE2D9F1A6500042024 /* DataSeeder.swift in Sources */,
+				E00456022D9F452F00042024 /* NotificationService.swift in Sources */,
+				E00455FC2D9F169F00042024 /* WorkSessionRepository.swift in Sources */,
+				E00456002D9F41FD00042024 /* TimerService.swift in Sources */,
 				E00455EF2D9CF48900042024 /* Font+Extensions.swift in Sources */,
+				E00456042D9F4E1E00042024 /* SettingService.swift in Sources */,
 				E00455ED2D9CF34600042024 /* Color+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

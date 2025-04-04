@@ -9,12 +9,18 @@ import SwiftUI
 
 @main
 struct Done_PomodoroApp: App {
-    let persistenceController = PersistenceController.shared
-
+    let taskRepository = TaskRepository()
+    
+    init() {
+        SettingsService.shared.registerDefaults()
+        NotificationService.shared.requestPermission()
+        DataSeeder.seedIfNeeded(using: TaskRepository())
+    }
+    
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            Text("Done App Placeholder")
         }
     }
 }

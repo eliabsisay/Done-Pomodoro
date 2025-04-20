@@ -17,6 +17,12 @@
 		E00456002D9F41FD00042024 /* TimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455FF2D9F41FD00042024 /* TimerService.swift */; };
 		E00456022D9F452F00042024 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456012D9F452F00042024 /* NotificationService.swift */; };
 		E00456042D9F4E1E00042024 /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456032D9F4E1E00042024 /* SettingService.swift */; };
+		E004562E2DA88FB700042024 /* WorkSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004562D2DA88FB700042024 /* WorkSessionViewModel.swift */; };
+		E00456302DA8945900042024 /* WorkSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004562F2DA8945900042024 /* WorkSessionView.swift */; };
+		E00456322DA896FC00042024 /* TimerInterval+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456312DA896FC00042024 /* TimerInterval+Extensions.swift */; };
+		E00456342DB44C1300042024 /* DevEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456332DB44C1300042024 /* DevEnvironment.swift */; };
+		E00456362DB4685C00042024 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456352DB4685C00042024 /* SessionManager.swift */; };
+		E00456382DB46AD300042024 /* SessionRestorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456372DB46AD300042024 /* SessionRestorer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +57,12 @@
 		E00455FF2D9F41FD00042024 /* TimerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerService.swift; sourceTree = "<group>"; };
 		E00456012D9F452F00042024 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		E00456032D9F4E1E00042024 /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
+		E004562D2DA88FB700042024 /* WorkSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSessionViewModel.swift; sourceTree = "<group>"; };
+		E004562F2DA8945900042024 /* WorkSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSessionView.swift; sourceTree = "<group>"; };
+		E00456312DA896FC00042024 /* TimerInterval+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerInterval+Extensions.swift"; sourceTree = "<group>"; };
+		E00456332DB44C1300042024 /* DevEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevEnvironment.swift; sourceTree = "<group>"; };
+		E00456352DB4685C00042024 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		E00456372DB46AD300042024 /* SessionRestorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRestorer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -127,6 +139,8 @@
 			children = (
 				E00455FF2D9F41FD00042024 /* TimerService.swift */,
 				E00456032D9F4E1E00042024 /* SettingService.swift */,
+				E00456352DB4685C00042024 /* SessionManager.swift */,
+				E00456372DB46AD300042024 /* SessionRestorer.swift */,
 			);
 			path = "App Core";
 			sourceTree = "<group>";
@@ -138,6 +152,8 @@
 				E00455EC2D9CF34600042024 /* Color+Extensions.swift */,
 				E00455EE2D9CF48900042024 /* Font+Extensions.swift */,
 				E00455F02D9CF63000042024 /* Localizable.strings */,
+				E00456312DA896FC00042024 /* TimerInterval+Extensions.swift */,
+				E00456332DB44C1300042024 /* DevEnvironment.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -145,6 +161,8 @@
 		E00455B22D9B98A500042024 /* Timer */ = {
 			isa = PBXGroup;
 			children = (
+				E004562D2DA88FB700042024 /* WorkSessionViewModel.swift */,
+				E004562F2DA8945900042024 /* WorkSessionView.swift */,
 			);
 			path = Timer;
 			sourceTree = "<group>";
@@ -353,15 +371,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E004562E2DA88FB700042024 /* WorkSessionViewModel.swift in Sources */,
 				E00455EB2D9CEC2100042024 /* Constants.swift in Sources */,
+				E00456362DB4685C00042024 /* SessionManager.swift in Sources */,
 				E00455FA2D9F09A500042024 /* TaskRepository.swift in Sources */,
 				E00455FE2D9F1A6500042024 /* DataSeeder.swift in Sources */,
 				E00456022D9F452F00042024 /* NotificationService.swift in Sources */,
 				E00455FC2D9F169F00042024 /* WorkSessionRepository.swift in Sources */,
 				E00456002D9F41FD00042024 /* TimerService.swift in Sources */,
 				E00455EF2D9CF48900042024 /* Font+Extensions.swift in Sources */,
+				E00456382DB46AD300042024 /* SessionRestorer.swift in Sources */,
 				E00456042D9F4E1E00042024 /* SettingService.swift in Sources */,
 				E00455ED2D9CF34600042024 /* Color+Extensions.swift in Sources */,
+				E00456322DA896FC00042024 /* TimerInterval+Extensions.swift in Sources */,
+				E00456302DA8945900042024 /* WorkSessionView.swift in Sources */,
+				E00456342DB44C1300042024 /* DevEnvironment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

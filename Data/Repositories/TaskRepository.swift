@@ -9,14 +9,18 @@ import Foundation
 import CoreData
 
 /// Handles all CRUD operations for Task entities using Core Data.
+/// This repository always uses a single consistent context for all operations.
+/// If no context is provided on initialization, it defaults to the shared viewContext.
 final class TaskRepository {
     
     // MARK: - Properties
     
+    /// The managed object context used for all task operations.
     private let context: NSManagedObjectContext
     
     // MARK: - Init
     
+    /// Initializes a new TaskRepository using the provided context (or the shared default).
     init(context: NSManagedObjectContext = PersistenceController.shared.container.viewContext) {
         self.context = context
     }
@@ -31,7 +35,7 @@ final class TaskRepository {
         do {
             return try context.fetch(request)
         } catch {
-            print("Error fetching tasks: \(error)")
+            print("❌ Error fetching tasks: \(error.localizedDescription)")
             return []
         }
     }
@@ -80,14 +84,29 @@ final class TaskRepository {
         context.delete(task)
         saveContext()
     }
+    
+    /// Deletes all Task entities
+    func deleteAllTasks() {
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Task.fetchRequest()
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+            do {
+                try context.execute(deleteRequest)
+                try context.save()
+                print("🧹 Deleted all Task records.")
+            } catch {
+                print("❌ Failed to delete tasks: \(error.localizedDescription)")
+            }
+        }
 
     // MARK: - Helpers
     
+    /// Saves any pending changes in the current context.
     private func saveContext() {
         do {
             try context.save()
         } catch {
-            print("Error saving context: \(error)")
+            print("❌ Error saving context: \(error.localizedDescription)")
         }
     }
 }

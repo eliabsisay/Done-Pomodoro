@@ -9,18 +9,25 @@ import SwiftUI
 
 @main
 struct Done_PomodoroApp: App {
+    
     let taskRepository = TaskRepository()
     
+    /// App-wide configuration that runs once when the app launches
     init() {
+        // 📲 Register default UserDefaults values for first launch
         SettingsService.shared.registerDefaults()
+        
+        // 🔔 Ask the user for permission to send local notifications
         NotificationService.shared.requestPermission()
-        DataSeeder.seedIfNeeded(using: TaskRepository())
+        
+        // 🧪 Apply development-only configurations (delete/seed data, etc.)
+        DevEnvironment.configure()
     }
-    
-    
+
     var body: some Scene {
         WindowGroup {
-            Text("Done App Placeholder")
+            WorkSessionView()
         }
     }
 }
+

@@ -23,7 +23,17 @@ enum Constants {
         static let reportUnits = "reportUnits"
         static let reportPeriod = "reportPeriod"
         static let appearanceMode = "appearanceMode"
+        static let activeSessionStartDate = "activeSessionStartDate"
+        static let activeSessionDuration = "activeSessionDuration"
+        static let activeSessionType = "activeSessionType"
     }
+   
+    /// App-specific label strings for session types
+        enum SessionLabels {
+            static let work = "Work Session"
+            static let shortBreak = "Short Break"
+            static let longBreak = "Long Break"
+        }
     
     /// UI Mode
     enum AppearanceMode: String {
@@ -32,7 +42,6 @@ enum Constants {
         case dark
     }
 
-    
     /// Identifiers for local notifications
     enum NotificationConstants {
         static let workSessionEnded = "workSessionEndedNotification"

@@ -26,7 +26,7 @@ struct Done_PomodoroApp: App {
 
     var body: some Scene {
         WindowGroup {
-            WorkSessionView()
+            MainTabView()
         }
     }
 }

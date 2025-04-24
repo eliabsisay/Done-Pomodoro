@@ -12,10 +12,10 @@ import Foundation
 struct DevEnvironment {
     
     /// Set to `true` to delete all existing tasks when the app launches.
-    static let shouldDeleteAllTasks = true
+    static let shouldDeleteAllTasks = false
     
     /// Set to `true` to reset the default seed flag and force reseeding tasks.
-    static let shouldForceReseedTasks = true
+    static let shouldForceReseedTasks = false
     
     /// Set to `true` to delete all saved work sessions from Core Data on app launch.
     static let shouldDeleteAllSessions = false

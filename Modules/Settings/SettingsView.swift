@@ -5,7 +5,6 @@
 //  Created by Eliab Sisay on 4/24/25.
 //
 
-
 import SwiftUI
 
 struct SettingsView: View {
@@ -17,6 +16,29 @@ struct SettingsView: View {
     
     var body: some View {
         Form {
+            // MARK: - Notifications Section
+            Section(header: Text("Notifications")) {
+                Toggle("Enable Notifications", isOn: $viewModel.pushNotificationsEnabled)
+                    .tint(.primaryColor)
+                
+                if !viewModel.notificationsAuthorized {
+                    HStack {
+                        Image(systemName: "exclamationmark.triangle")
+                            .foregroundColor(.yellow)
+                        Text("Notification permissions required")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.top, 4)
+                    
+                    Button("Request Permission") {
+                        viewModel.requestNotificationPermission()
+                    }
+                    .font(.caption)
+                    .padding(.vertical, 5)
+                }
+            }
+            
             // MARK: - Appearance Section
             Section(header: Text("Appearance")) {
                 Picker("Appearance Mode", selection: $viewModel.appearanceMode) {
@@ -87,6 +109,10 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $viewModel.showingTutorialSheet) {
             HowItWorksView()
+        }
+        .onAppear {
+            // Refresh notification status when the view appears
+            viewModel.checkNotificationPermission()
         }
     }
 }

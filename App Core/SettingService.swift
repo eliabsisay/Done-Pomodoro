@@ -28,7 +28,7 @@ final class SettingsService {
             Constants.UserDefaultsKeys.preventSleep: false,
             Constants.UserDefaultsKeys.workCompletedSound: "ding",
             Constants.UserDefaultsKeys.breakCompletedSound: "chime",
-            // Add others as needed
+            Constants.UserDefaultsKeys.pushNotificationsEnabled: true,
         ])
     }
     
@@ -71,5 +71,4 @@ final class SettingsService {
         get { defaults.bool(forKey: Constants.UserDefaultsKeys.pushNotificationsEnabled) }
         set { defaults.set(newValue, forKey: Constants.UserDefaultsKeys.pushNotificationsEnabled) }
     }
-    
 }

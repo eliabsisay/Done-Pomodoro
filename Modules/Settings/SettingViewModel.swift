@@ -49,10 +49,24 @@ final class SettingsViewModel: ObservableObject {
     /// Flag to control the "How it Works" tutorial sheet presentation
     @Published var showingTutorialSheet = false
     
+    /// Current notification permission status
+    @Published var notificationsAuthorized = false
+    
+    /// Whether to use notifications
+    @Published var pushNotificationsEnabled: Bool {
+        didSet {
+            settingsService.pushNotificationsEnabled = pushNotificationsEnabled
+            if pushNotificationsEnabled && !notificationsAuthorized {
+                requestNotificationPermission()
+            }
+        }
+    }
+    
     // MARK: - Private Properties
     
     /// Reference to the settings service for persistence
     private let settingsService = SettingsService.shared
+    private let notificationService = NotificationService.shared
     
     /// Available sound options for session completion
     let availableSounds = ["ding", "chime", "bell", "marimba", "none"]
@@ -65,15 +79,20 @@ final class SettingsViewModel: ObservableObject {
         self.preventSleep = settingsService.preventSleep
         self.workCompletedSound = settingsService.workCompletedSound
         self.breakCompletedSound = settingsService.breakCompletedSound
+        self.pushNotificationsEnabled = settingsService.pushNotificationsEnabled
         
         print("📱 Settings loaded:")
         print("- Appearance Mode: \(appearanceMode.rawValue)")
         print("- Prevent Sleep: \(preventSleep)")
         print("- Work Sound: \(workCompletedSound)")
         print("- Break Sound: \(breakCompletedSound)")
+        print("- Push Notifications: \(pushNotificationsEnabled)")
         
         // Apply current sleep prevention setting
         updateSleepPrevention()
+        
+        // Check notification permission status
+        checkNotificationPermission()
     }
     
     // MARK: - Methods
@@ -95,5 +114,25 @@ final class SettingsViewModel: ObservableObject {
         #endif
         
         print("⭐️ App review requested")
+    }
+    
+    /// Checks the current notification permission status
+    func checkNotificationPermission() {
+        notificationService.checkPermissionStatus { [weak self] authorized in
+            DispatchQueue.main.async {
+                self?.notificationsAuthorized = authorized
+                print("🔔 Notification permission status: \(authorized ? "authorized" : "denied")")
+            }
+        }
+    }
+    
+    /// Requests notification permission from the user
+    func requestNotificationPermission() {
+        notificationService.requestPermission()
+        
+        // Check the status again after a short delay to update UI
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.checkNotificationPermission()
+        }
     }
 }

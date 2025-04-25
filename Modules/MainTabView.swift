@@ -1,4 +1,3 @@
-//
 //  MainTabView.swift
 //  Done Pomodoro
 //
@@ -22,6 +21,13 @@ struct MainTabView: View {
             }
             .tabItem {
                 Label("Tasks", systemImage: "checklist")
+            }
+            
+            NavigationView {
+                SettingsView()
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gear")
             }
         }
     }

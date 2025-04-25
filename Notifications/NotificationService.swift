@@ -76,16 +76,42 @@ final class NotificationService {
         }
     }
     
+    /// Returns a notification sound based on the provided sound name.
+    /// - Parameter name: The name of the sound to use
+    /// - Returns: A UNNotificationSound object
+    func getSoundFor(name: String) -> UNNotificationSound {
+        // Map the string setting to actual sound files
+        switch name {
+        case "ding":
+            return UNNotificationSound.default
+        case "chime":
+            return UNNotificationSound(named: UNNotificationSoundName("chime.caf"))
+        case "bell":
+            return UNNotificationSound(named: UNNotificationSoundName("bell.caf"))
+        case "swoosh":
+            return UNNotificationSound(named: UNNotificationSoundName("swoosh.caf"))
+        case "completed":
+            return UNNotificationSound(named: UNNotificationSoundName("completed.caf"))
+        default:
+            return UNNotificationSound.default
+        }
+    }
+    
     // MARK: - App-Specific Wrappers
     
     /// Convenience method for scheduling end-of-session notifications.
     func scheduleSessionEndNotification(in seconds: TimeInterval, sessionType: SessionType) {
         let title = sessionType == .work ? "Work session done!" : "Break over!"
         let body = sessionType == .work
-        ? "Time to take a break and recharge."
-        : "Ready to focus again? Start your next session!"
+            ? "Time to take a break and recharge."
+            : "Ready to focus again? Start your next session!"
         
-        scheduleNotification(in: seconds, title: title, body: body)
+        // Use the appropriate sound based on session type
+        let sound = sessionType == .work
+            ? getSoundFor(name: SettingsService.shared.workCompletedSound)
+            : getSoundFor(name: SettingsService.shared.breakCompletedSound)
+        
+        scheduleNotification(in: seconds, title: title, body: body, sound: sound)
     }
     
     // MARK: - Cancel

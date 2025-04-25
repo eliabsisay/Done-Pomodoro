@@ -30,6 +30,10 @@
 		E004569F2DBAF54700042024 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456982DBAF54700042024 /* TaskListView.swift */; };
 		E00456A02DBAF54700042024 /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456992DBAF54700042024 /* TaskListViewModel.swift */; };
 		E00456A12DBAF54700042024 /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004569B2DBAF54700042024 /* ToDoListView.swift */; };
+		E00456CD2DBB16CB00042024 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456CC2DBB16CB00042024 /* SettingViewModel.swift */; };
+		E00456CF2DBB177B00042024 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456CE2DBB177B00042024 /* AboutView.swift */; };
+		E00456D12DBB17C300042024 /* HowItWorksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456D02DBB17C300042024 /* HowItWorksView.swift */; };
+		E00456D52DBB29D800042024 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456D42DBB29D800042024 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +81,10 @@
 		E00456992DBAF54700042024 /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
 		E004569A2DBAF54700042024 /* TaskRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
 		E004569B2DBAF54700042024 /* ToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
+		E00456CC2DBB16CB00042024 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		E00456CE2DBB177B00042024 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		E00456D02DBB17C300042024 /* HowItWorksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowItWorksView.swift; sourceTree = "<group>"; };
+		E00456D42DBB29D800042024 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -184,6 +192,10 @@
 		E00455B42D9B98BB00042024 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				E00456CC2DBB16CB00042024 /* SettingViewModel.swift */,
+				E00456CE2DBB177B00042024 /* AboutView.swift */,
+				E00456D02DBB17C300042024 /* HowItWorksView.swift */,
+				E00456D42DBB29D800042024 /* SettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -395,6 +407,7 @@
 				E004562E2DA88FB700042024 /* WorkSessionViewModel.swift in Sources */,
 				E00455EB2D9CEC2100042024 /* Constants.swift in Sources */,
 				E00456942DBAEFF200042024 /* MainTabView.swift in Sources */,
+				E00456CF2DBB177B00042024 /* AboutView.swift in Sources */,
 				E00456362DB4685C00042024 /* SessionManager.swift in Sources */,
 				E00455FA2D9F09A500042024 /* TaskRepository.swift in Sources */,
 				E00455FE2D9F1A6500042024 /* DataSeeder.swift in Sources */,
@@ -402,11 +415,14 @@
 				E00455FC2D9F169F00042024 /* WorkSessionRepository.swift in Sources */,
 				E00456002D9F41FD00042024 /* TimerService.swift in Sources */,
 				E00455EF2D9CF48900042024 /* Font+Extensions.swift in Sources */,
+				E00456D12DBB17C300042024 /* HowItWorksView.swift in Sources */,
 				E00456382DB46AD300042024 /* SessionRestorer.swift in Sources */,
 				E00456042D9F4E1E00042024 /* SettingService.swift in Sources */,
 				E00455ED2D9CF34600042024 /* Color+Extensions.swift in Sources */,
+				E00456D52DBB29D800042024 /* SettingsView.swift in Sources */,
 				E00456322DA896FC00042024 /* TimerInterval+Extensions.swift in Sources */,
 				E00456302DA8945900042024 /* WorkSessionView.swift in Sources */,
+				E00456CD2DBB16CB00042024 /* SettingViewModel.swift in Sources */,
 				E00456342DB44C1300042024 /* DevEnvironment.swift in Sources */,
 				E004569C2DBAF54700042024 /* TaskRowView.swift in Sources */,
 				E004569D2DBAF54700042024 /* TaskEditView.swift in Sources */,

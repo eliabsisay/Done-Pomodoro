@@ -67,4 +67,9 @@ final class SettingsService {
         set { defaults.set(newValue, forKey: Constants.UserDefaultsKeys.breakCompletedSound) }
     }
     
+    var pushNotificationsEnabled: Bool {
+        get { defaults.bool(forKey: Constants.UserDefaultsKeys.pushNotificationsEnabled) }
+        set { defaults.set(newValue, forKey: Constants.UserDefaultsKeys.pushNotificationsEnabled) }
+    }
+    
 }

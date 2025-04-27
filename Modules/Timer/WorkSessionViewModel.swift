@@ -164,7 +164,7 @@ final class WorkSessionViewModel: ObservableObject {
         self.sessionStartTime = restored.startTime
         self.sessionType = restored.sessionType
         self.timeRemaining = restored.timeRemaining
-
+        
         // Resume the timer
         timerService.start(duration: restored.timeRemaining, type: restored.sessionType)
     }
@@ -197,6 +197,9 @@ final class WorkSessionViewModel: ObservableObject {
         
         NotificationService.shared.cancelAll()
         transitionToNextSession()
+        
+        // Post notification that a session was completed
+        AppEvents.post(AppEvents.sessionCompleted)
     }
     
     private func transitionToNextSession() {

@@ -17,6 +17,8 @@ final class SessionManager {
     /// Tracks the number of completed work sessions (used to trigger long breaks)
     private(set) var completedWorkSessions: Int = 0
     
+    static let sessionCompletedNotification = Notification.Name("sessionCompletedNotification")
+    
     // MARK: - Init
     
     /// Initializes a new SessionManager instance
@@ -77,6 +79,9 @@ final class SessionManager {
         
         completedWorkSessions += 1
         
+        // Notify observers that a session was completed
+        AppEvents.post(AppEvents.sessionCompleted)
+        
         print("📝 Logged completed work session:")
         print("- Task: \(task.name ?? "Unnamed Task")")
         print("- Duration: \(elapsed.formatted(.number.precision(.fractionLength(2)))) seconds")
@@ -97,8 +102,8 @@ final class SessionManager {
             let useLongBreak = completedWorkSessions % Int(task.longBreakAfter) == 0
             nextType = useLongBreak ? .longBreak : .shortBreak
             nextDuration = useLongBreak
-                ? TimeInterval(task.longBreakDuration * 60)
-                : TimeInterval(task.shortBreakDuration * 60)
+            ? TimeInterval(task.longBreakDuration * 60)
+            : TimeInterval(task.shortBreakDuration * 60)
         case .shortBreak, .longBreak:
             nextType = .work
             nextDuration = TimeInterval(task.workDuration * 60)

@@ -29,7 +29,6 @@ final class WorkSessionRepository {
     /// Fetches all work sessions related to a given task.
     /// - Parameter task: The parent Task whose sessions should be retrieved.
     /// - Returns: A list of WorkSession objects.
-    
     func getSessions(for task: Task) -> [WorkSession] {
         let request: NSFetchRequest<WorkSession> = WorkSession.fetchRequest()
         request.predicate = NSPredicate(format: "task == %@", task)
@@ -43,9 +42,22 @@ final class WorkSessionRepository {
         }
     }
     
+    /// Fetches all work sessions within a date range, regardless of task
+    func getAllSessionsInRange(from startDate: Date, to endDate: Date) -> [WorkSession] {
+        let request: NSFetchRequest<WorkSession> = WorkSession.fetchRequest()
+        request.predicate = NSPredicate(format: "startTime >= %@ AND startTime <= %@", startDate as NSDate, endDate as NSDate)
+        request.sortDescriptors = [NSSortDescriptor(key: "startTime", ascending: false)]
+        
+        do {
+            return try context.fetch(request)
+        } catch {
+            print("❌ Error fetching work sessions by date range: \(error.localizedDescription)")
+            return []
+        }
+    }
+    
     /// Creates a new WorkSession object and saves it to the persistent store.
     /// - Returns: The created WorkSession object (or nil on failure).
-    
     @discardableResult
     func createSession(for task: Task,
                        startTime: Date,

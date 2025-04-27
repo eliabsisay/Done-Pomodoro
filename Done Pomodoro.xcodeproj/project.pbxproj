@@ -34,6 +34,13 @@
 		E00456CF2DBB177B00042024 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456CE2DBB177B00042024 /* AboutView.swift */; };
 		E00456D12DBB17C300042024 /* HowItWorksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456D02DBB17C300042024 /* HowItWorksView.swift */; };
 		E00456D52DBB29D800042024 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456D42DBB29D800042024 /* SettingsView.swift */; };
+		E004572F2DBC224000042024 /* ReportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004572E2DBC224000042024 /* ReportsViewModel.swift */; };
+		E00457312DBC235800042024 /* ReportBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457302DBC235800042024 /* ReportBarChartView.swift */; };
+		E00457332DBC23E900042024 /* ReportPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457322DBC23E900042024 /* ReportPieChartView.swift */; };
+		E00457352DBC264400042024 /* ReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457342DBC264400042024 /* ReportsView.swift */; };
+		E00457372DBC269A00042024 /* ReportSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457362DBC269A00042024 /* ReportSettingsView.swift */; };
+		E00457392DBC282900042024 /* ReportCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457382DBC282900042024 /* ReportCache.swift */; };
+		E004573B2DBDBB4F00042024 /* AppEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004573A2DBDBB4F00042024 /* AppEvents.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +92,13 @@
 		E00456CE2DBB177B00042024 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		E00456D02DBB17C300042024 /* HowItWorksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowItWorksView.swift; sourceTree = "<group>"; };
 		E00456D42DBB29D800042024 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E004572E2DBC224000042024 /* ReportsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsViewModel.swift; sourceTree = "<group>"; };
+		E00457302DBC235800042024 /* ReportBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBarChartView.swift; sourceTree = "<group>"; };
+		E00457322DBC23E900042024 /* ReportPieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPieChartView.swift; sourceTree = "<group>"; };
+		E00457342DBC264400042024 /* ReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsView.swift; sourceTree = "<group>"; };
+		E00457362DBC269A00042024 /* ReportSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSettingsView.swift; sourceTree = "<group>"; };
+		E00457382DBC282900042024 /* ReportCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCache.swift; sourceTree = "<group>"; };
+		E004573A2DBDBB4F00042024 /* AppEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEvents.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -163,6 +177,7 @@
 				E00456032D9F4E1E00042024 /* SettingService.swift */,
 				E00456352DB4685C00042024 /* SessionManager.swift */,
 				E00456372DB46AD300042024 /* SessionRestorer.swift */,
+				E004573A2DBDBB4F00042024 /* AppEvents.swift */,
 			);
 			path = "App Core";
 			sourceTree = "<group>";
@@ -193,9 +208,9 @@
 			isa = PBXGroup;
 			children = (
 				E00456CC2DBB16CB00042024 /* SettingViewModel.swift */,
+				E00456D42DBB29D800042024 /* SettingsView.swift */,
 				E00456CE2DBB177B00042024 /* AboutView.swift */,
 				E00456D02DBB17C300042024 /* HowItWorksView.swift */,
-				E00456D42DBB29D800042024 /* SettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -203,6 +218,12 @@
 		E00455B52D9B98C900042024 /* Reports */ = {
 			isa = PBXGroup;
 			children = (
+				E004572E2DBC224000042024 /* ReportsViewModel.swift */,
+				E00457302DBC235800042024 /* ReportBarChartView.swift */,
+				E00457322DBC23E900042024 /* ReportPieChartView.swift */,
+				E00457342DBC264400042024 /* ReportsView.swift */,
+				E00457362DBC269A00042024 /* ReportSettingsView.swift */,
+				E00457382DBC282900042024 /* ReportCache.swift */,
 			);
 			path = Reports;
 			sourceTree = "<group>";
@@ -413,19 +434,26 @@
 				E00455FE2D9F1A6500042024 /* DataSeeder.swift in Sources */,
 				E00456022D9F452F00042024 /* NotificationService.swift in Sources */,
 				E00455FC2D9F169F00042024 /* WorkSessionRepository.swift in Sources */,
+				E004572F2DBC224000042024 /* ReportsViewModel.swift in Sources */,
+				E00457352DBC264400042024 /* ReportsView.swift in Sources */,
 				E00456002D9F41FD00042024 /* TimerService.swift in Sources */,
 				E00455EF2D9CF48900042024 /* Font+Extensions.swift in Sources */,
+				E00457372DBC269A00042024 /* ReportSettingsView.swift in Sources */,
 				E00456D12DBB17C300042024 /* HowItWorksView.swift in Sources */,
+				E00457312DBC235800042024 /* ReportBarChartView.swift in Sources */,
 				E00456382DB46AD300042024 /* SessionRestorer.swift in Sources */,
 				E00456042D9F4E1E00042024 /* SettingService.swift in Sources */,
 				E00455ED2D9CF34600042024 /* Color+Extensions.swift in Sources */,
 				E00456D52DBB29D800042024 /* SettingsView.swift in Sources */,
 				E00456322DA896FC00042024 /* TimerInterval+Extensions.swift in Sources */,
 				E00456302DA8945900042024 /* WorkSessionView.swift in Sources */,
+				E00457332DBC23E900042024 /* ReportPieChartView.swift in Sources */,
 				E00456CD2DBB16CB00042024 /* SettingViewModel.swift in Sources */,
+				E00457392DBC282900042024 /* ReportCache.swift in Sources */,
 				E00456342DB44C1300042024 /* DevEnvironment.swift in Sources */,
 				E004569C2DBAF54700042024 /* TaskRowView.swift in Sources */,
 				E004569D2DBAF54700042024 /* TaskEditView.swift in Sources */,
+				E004573B2DBDBB4F00042024 /* AppEvents.swift in Sources */,
 				E004569E2DBAF54700042024 /* DoneListView.swift in Sources */,
 				E004569F2DBAF54700042024 /* TaskListView.swift in Sources */,
 				E00456A02DBAF54700042024 /* TaskListViewModel.swift in Sources */,

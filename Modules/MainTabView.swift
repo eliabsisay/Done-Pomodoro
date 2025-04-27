@@ -24,6 +24,13 @@ struct MainTabView: View {
             }
             
             NavigationView {
+                ReportsView()
+            }
+            .tabItem {
+                Label("Reports", systemImage: "chart.bar")
+            }
+            
+            NavigationView {
                 SettingsView()
             }
             .tabItem {

@@ -56,6 +56,9 @@ final class TaskListViewModel: ObservableObject {
         taskRepo.updateTask(task)
         loadTasks()
         print("➕ Added new task: \(task.name ?? "Unnamed Task")")
+        
+        // Post notification that a task was modified
+        AppEvents.post(AppEvents.taskModified, object: task)
     }
     
     /// Updates an existing task in the repository and refreshes the task list
@@ -63,6 +66,8 @@ final class TaskListViewModel: ObservableObject {
         taskRepo.updateTask(task)
         loadTasks()
         print("📝 Updated task: \(task.name ?? "Unnamed Task")")
+        
+        AppEvents.post(AppEvents.taskModified, object: task)
     }
     
     /// Marks a task as complete or incomplete

@@ -52,6 +52,15 @@ struct TaskEditView: View {
     // Reference to the Core Data context
     private let context = PersistenceController.shared.container.viewContext
     
+    // Check if task is in an active session
+    private var isTaskInActiveSession: Bool {
+        if case .edit(let task) = mode {
+            // Check if this task is currently in a session
+            return WorkSessionViewModel.isTaskInActiveSession(task)
+        }
+        return false
+    }
+    
     var body: some View {
         NavigationView {
             Form {

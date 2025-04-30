@@ -21,6 +21,7 @@ final class WorkSessionViewModel: ObservableObject {
     @Published var showingTaskPicker = false
     @Published var availableTasks: [Task] = []
     @Published var showTaskCompletedOverlay: Bool = false
+    @Published var showingTaskCreationSheet = false
 
     
     // MARK: - Private Properties
@@ -140,6 +141,11 @@ final class WorkSessionViewModel: ObservableObject {
     func loadAvailableTasks() {
         self.availableTasks = taskRepo.getAllTasks().filter { !$0.isCompleted }
         print("📋 Loaded \(availableTasks.count) available tasks for picker")
+        
+        // If we had a task selected that's now completed, clear it
+        if let currentTask = currentTask, currentTask.isCompleted {
+            self.currentTask = nil
+        }
     }
     
     /// Selects a task and updates the timer settings
@@ -510,5 +516,20 @@ final class WorkSessionViewModel: ObservableObject {
                sessionStartTime == nil &&
                timeRemaining > 0 &&
                currentTask != nil
+    }
+}
+
+extension WorkSessionViewModel {
+    
+    /// Returns true if there are no incomplete tasks available
+    var hasNoIncompleteTasks: Bool {
+        return availableTasks.isEmpty
+    }
+    
+    /// Opens the task creation view
+    func showTaskCreationView() {
+        // We'll need a way to present the TaskEditView
+        // This will be handled by a new published property
+        showingTaskCreationSheet = true
     }
 }

@@ -24,9 +24,14 @@ struct WorkSessionView: View {
                 
                 // Task name with selector
                 Button(action: {
-                    // Load available tasks before showing picker
-                    viewModel.loadAvailableTasks()
-                    viewModel.showingTaskPicker = true
+                    //If no incomplete tasks show task createion view
+                    if viewModel.hasNoIncompleteTasks {
+                        viewModel.showTaskCreationView()
+                    } else {
+                        // Load available tasks before showing picker
+                        viewModel.loadAvailableTasks()
+                        viewModel.showingTaskPicker = true
+                    }
                 }) {
                     HStack {
                         if let task = viewModel.currentTask {
@@ -34,14 +39,25 @@ struct WorkSessionView: View {
                                 .font(.headingL)
                                 .foregroundStyle(Color.textColor)
                         } else {
-                            Text("Select a Task")
-                                .font(.headingL)
-                                .foregroundStyle(.gray)
+                            if viewModel.hasNoIncompleteTasks {
+                                Text("Create a Task")
+                                    .font(.headingL)
+                                    .foregroundStyle(.blue)
+                                Image(systemName: "plus")
+                                    .font(.caption)
+                                    .foregroundStyle(.blue)
+                                
+                            } else {
+                                Text("Select a Task")
+                                    .font(.headingL)
+                                    .foregroundStyle(.gray)
+                                Image(systemName: "chevron.down")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                
+                            }
                         }
                         
-                        Image(systemName: "chevron.down")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
                     }
                 }
                 .disabled(viewModel.isRunning) // Prevent changing tasks during active session
@@ -162,6 +178,16 @@ struct WorkSessionView: View {
             .padding()
             .sheet(isPresented: $viewModel.showingTaskPicker) {
                 TaskPickerView(viewModel: viewModel)
+            }
+            .sheet(isPresented: $viewModel.showingTaskCreationSheet) {
+                TaskEditView(mode: .new, onSave: { newTask in
+                    // When a task is saved, select it and close the sheet
+                    viewModel.selectTask(newTask)
+                    viewModel.showingTaskCreationSheet = false
+                    
+                    // Reload available tasks to ensure UI is updated
+                    viewModel.loadAvailableTasks()
+                })
             }
             .onAppear {
                 // Load available tasks when the view appears

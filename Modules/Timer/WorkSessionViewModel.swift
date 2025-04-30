@@ -312,17 +312,24 @@ final class WorkSessionViewModel: ObservableObject {
         handleSessionCompletion()
     }
     
+    /// Resets everything back to “no active session”
+    /// and kicks the UI into “pick a new task” mode.
     private func resetState() {
+        // Clear out the current task so the picker becomes empty
         currentTask = nil
+
+        // Clear out any leftover timing state
         sessionStartTime = nil
         totalDuration = 0
         isRunning = false
         timeRemaining = 0
-        
+
+        // Clean up any persisted session info
         UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.activeSessionStartDate)
         UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.activeSessionDuration)
         UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.activeSessionType)
     }
+
     
     // MARK: - Restore Session
     

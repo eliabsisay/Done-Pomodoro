@@ -105,45 +105,55 @@ struct WorkSessionView: View {
                         .disabled(viewModel.currentTask == nil) // Disable if no task selected
                         
                     } else {
-                        // When timer is paused — show options
-                        VStack(spacing: 16) {
-                            // First row - Resume (common for all session types)
-                            Button("Resume") {
-                                viewModel.resume()
-                            }
-                            .buttonStyle(.bordered)
-                            .frame(maxWidth: .infinity)
-                            
-                            // Second row - options based on session type
-                            if viewModel.sessionType == .work {
-                                // For work sessions: Complete Session, Complete Task, Cancel
-                                HStack(spacing: 12) {
-                                    Button("Complete Session") {
+                        // Paused state UI
+                        if viewModel.currentTask == nil {
+                            // --- After completing a task: show only a disabled Start button ---
+                            Button("Start") { }
+                                .buttonStyle(.borderedProminent)
+                                .frame(maxWidth: .infinity, minHeight: 44)
+                            // Always disabled until they actually pick a task
+                                .disabled(!viewModel.isStartable)
+                        } else {
+                            // --- Normal “paused” menu (no task‐complete yet) ---
+                            VStack(spacing: 16) {
+                                // First row - Resume (common for all session types)
+                                Button("Resume") {
+                                    viewModel.resume()
+                                }
+                                .buttonStyle(.bordered)
+                                .frame(maxWidth: .infinity)
+                                
+                                // Second row - options based on session type
+                                if viewModel.sessionType == .work {
+                                    // For work sessions: Complete Session, Complete Task, Cancel
+                                    HStack(spacing: 12) {
+                                        Button("Complete Session") {
+                                            viewModel.completeWorkSession()
+                                        }
+                                        .buttonStyle(.borderedProminent)
+                                        .tint(.blue)
+                                        
+                                        Button("Complete Task") {
+                                            viewModel.completeTask()
+                                        }
+                                        .buttonStyle(.borderedProminent)
+                                        .tint(.green)
+                                        
+                                        Button("Cancel") {
+                                            viewModel.cancel()
+                                        }
+                                        .buttonStyle(.bordered)
+                                        .tint(.red)
+                                    }
+                                } else {
+                                    // For break sessions: Just Skip Break (Resume is already handled above)
+                                    Button("Skip Break") {
                                         viewModel.completeWorkSession()
                                     }
                                     .buttonStyle(.borderedProminent)
                                     .tint(.blue)
-                                    
-                                    Button("Complete Task") {
-                                        viewModel.completeTask()
-                                    }
-                                    .buttonStyle(.borderedProminent)
-                                    .tint(.green)
-                                    
-                                    Button("Cancel") {
-                                        viewModel.cancel()
-                                    }
-                                    .buttonStyle(.bordered)
-                                    .tint(.red)
+                                    .frame(maxWidth: .infinity)
                                 }
-                            } else {
-                                // For break sessions: Just Skip Break (Resume is already handled above)
-                                Button("Skip Break") {
-                                    viewModel.completeWorkSession()
-                                }
-                                .buttonStyle(.borderedProminent)
-                                .tint(.blue)
-                                .frame(maxWidth: .infinity)
                             }
                         }
                     }

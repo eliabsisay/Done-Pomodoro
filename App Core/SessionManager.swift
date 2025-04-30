@@ -35,32 +35,43 @@ final class SessionManager {
     ///   - start: The session's start time
     ///   - sessionType: The type of session (work, shortBreak, longBreak)
     ///   - totalDuration: Full intended duration (used to calculate progress)
+    ///   - intervalCount: Optional explicit interval count to use (defaults to calculated value)
     ///   - end: The current time (used to determine how long the session actually ran)
     func logCompletedSession(task: Task,
                              start: Date,
                              sessionType: SessionType,
                              totalDuration: TimeInterval,
+                             intervalCount: Double? = nil,
                              end: Date = Date()) {
         
         let elapsed = end.timeIntervalSince(start)
         
-        // Determine how much credit to assign based on % completed
-        let percentComplete = elapsed / totalDuration
-        let intervalCount: Double = {
-            if percentComplete >= 0.8 {
-                print("📊 Session percent complete: \(percentComplete) — Full credit (1)")
-                return 1
-            } else if percentComplete >= 0.5 {
-                print("📊 Session percent complete: \(percentComplete) — Half credit (0.5)")
-                return 0.5
-            } else {
-                print("📊 Session percent complete: \(percentComplete) — No credit (0)")
-                return 0
-            }
-        }()
+        // Determine how much credit to assign
+        let sessionIntervalCount: Double
         
-        guard sessionType == .work, intervalCount > 0 else {
-            print("🚫 Skipping session logging — Type: \(sessionType.rawValue), Credit: \(intervalCount)")
+        if let intervalCount = intervalCount {
+            // Use the explicitly provided interval count
+            sessionIntervalCount = intervalCount
+            print("📊 Using provided interval count: \(intervalCount)")
+        } else {
+            // Calculate based on % completed
+            let percentComplete = elapsed / totalDuration
+            sessionIntervalCount = {
+                if percentComplete >= 0.8 {
+                    print("📊 Session percent complete: \(percentComplete) — Full credit (1)")
+                    return 1
+                } else if percentComplete >= 0.5 {
+                    print("📊 Session percent complete: \(percentComplete) — Half credit (0.5)")
+                    return 0.5
+                } else {
+                    print("📊 Session percent complete: \(percentComplete) — No credit (0)")
+                    return 0
+                }
+            }()
+        }
+        
+        guard sessionType == .work, sessionIntervalCount > 0 else {
+            print("🚫 Skipping session logging — Type: \(sessionType.rawValue), Credit: \(sessionIntervalCount)")
             return
         }
         
@@ -72,7 +83,7 @@ final class SessionManager {
             isPaused: false,
             isCompleted: true,
             duration: elapsed / 60,  // Store in minutes
-            intervalCount: intervalCount,
+            intervalCount: sessionIntervalCount,
             pauseTime: nil,
             totalPauseDuration: 0
         )
@@ -85,7 +96,7 @@ final class SessionManager {
         print("📝 Logged completed work session:")
         print("- Task: \(task.name ?? "Unnamed Task")")
         print("- Duration: \(elapsed.formatted(.number.precision(.fractionLength(2)))) seconds")
-        print("- Interval Count: \(intervalCount)")
+        print("- Interval Count: \(sessionIntervalCount)")
         print("- Total Work Sessions Completed: \(completedWorkSessions)")
     }
     

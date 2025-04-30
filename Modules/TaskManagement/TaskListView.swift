@@ -57,11 +57,24 @@ struct TaskListView: View {
             })
         }
         .sheet(item: $viewModel.editingTask) { task in
-            TaskEditView(mode: .edit(task), onSave: { updatedTask in
-                viewModel.updateTask(updatedTask)
-                viewModel.editingTask = nil
-            })
+            if WorkSessionViewModel.isTaskInActiveSession(task) {
+                // Show an alert or modal explaining why editing is disabled
+                AlertView(
+                    title: "Cannot Edit Active Task",
+                    message: "This task is currently in an active session. Please wait until the session completes or cancel the session before editing.",
+                    buttonText: "OK",
+                    action: {
+                        viewModel.editingTask = nil
+                    }
+                )
+            } else {
+                TaskEditView(mode: .edit(task), onSave: { updatedTask in
+                    viewModel.updateTask(updatedTask)
+                    viewModel.editingTask = nil
+                })
+            }
         }
+        
         .onAppear {
             viewModel.loadTasks()
         }

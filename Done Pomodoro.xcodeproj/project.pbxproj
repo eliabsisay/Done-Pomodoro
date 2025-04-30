@@ -41,6 +41,8 @@
 		E00457372DBC269A00042024 /* ReportSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457362DBC269A00042024 /* ReportSettingsView.swift */; };
 		E00457392DBC282900042024 /* ReportCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457382DBC282900042024 /* ReportCache.swift */; };
 		E004573B2DBDBB4F00042024 /* AppEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004573A2DBDBB4F00042024 /* AppEvents.swift */; };
+		E00457652DC0420F00042024 /* TaskPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457642DC0420F00042024 /* TaskPickerView.swift */; };
+		E00457672DC0473400042024 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457662DC0473400042024 /* AlertView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +101,8 @@
 		E00457362DBC269A00042024 /* ReportSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSettingsView.swift; sourceTree = "<group>"; };
 		E00457382DBC282900042024 /* ReportCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCache.swift; sourceTree = "<group>"; };
 		E004573A2DBDBB4F00042024 /* AppEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEvents.swift; sourceTree = "<group>"; };
+		E00457642DC0420F00042024 /* TaskPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPickerView.swift; sourceTree = "<group>"; };
+		E00457662DC0473400042024 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -200,6 +204,7 @@
 			children = (
 				E004562D2DA88FB700042024 /* WorkSessionViewModel.swift */,
 				E004562F2DA8945900042024 /* WorkSessionView.swift */,
+				E00457642DC0420F00042024 /* TaskPickerView.swift */,
 			);
 			path = Timer;
 			sourceTree = "<group>";
@@ -275,6 +280,7 @@
 				E00456992DBAF54700042024 /* TaskListViewModel.swift */,
 				E004569A2DBAF54700042024 /* TaskRowView.swift */,
 				E004569B2DBAF54700042024 /* ToDoListView.swift */,
+				E00457662DC0473400042024 /* AlertView.swift */,
 			);
 			path = TaskManagement;
 			sourceTree = "<group>";
@@ -433,7 +439,9 @@
 				E00455FA2D9F09A500042024 /* TaskRepository.swift in Sources */,
 				E00455FE2D9F1A6500042024 /* DataSeeder.swift in Sources */,
 				E00456022D9F452F00042024 /* NotificationService.swift in Sources */,
+				E00457672DC0473400042024 /* AlertView.swift in Sources */,
 				E00455FC2D9F169F00042024 /* WorkSessionRepository.swift in Sources */,
+				E00457652DC0420F00042024 /* TaskPickerView.swift in Sources */,
 				E004572F2DBC224000042024 /* ReportsViewModel.swift in Sources */,
 				E00457352DBC264400042024 /* ReportsView.swift in Sources */,
 				E00456002D9F41FD00042024 /* TimerService.swift in Sources */,

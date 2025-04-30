@@ -15,45 +15,70 @@ struct TaskPickerView: View {
     // Reference to the parent view model
     @ObservedObject var viewModel: WorkSessionViewModel
     
+    // State variable to control the task creation sheet
+    @State private var showingTaskCreationSheet = false
+    
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.availableTasks) { task in
+                
+                // Add a "Create New Task" button at the top of the list
+                Section {
                     Button(action: {
-                        viewModel.selectTask(task)
-                        dismiss()
+                        showingTaskCreationSheet = true
                     }) {
                         HStack {
-                            // Color indicator
-                            Circle()
-                                .fill(getTaskColor(task))
-                                .frame(width: 16, height: 16)
-                                .padding(.trailing, 4)
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.primaryColor)
+                                .font(.title3)
                             
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(task.name ?? "Unnamed Task")
-                                    .font(.bodyMedium)
-                                
-                                HStack {
-                                    Image(systemName: "clock")
-                                        .font(.caption)
-                                    Text("\(task.workDuration) min work, \(task.shortBreakDuration) min break")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                }
-                            }
-                            
-                            Spacer()
-                            
-                            // Show checkmark for currently selected task
-                            if viewModel.currentTask?.id == task.id {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.accentColor)
-                            }
+                            Text("Create New Task")
+                                .font(.headline)
+                                .foregroundColor(.primaryColor)
                         }
-                        .contentShape(Rectangle())
                     }
                     .buttonStyle(PlainButtonStyle())
+                }
+                
+                Section {
+                    
+                    ForEach(viewModel.availableTasks) { task in
+                        Button(action: {
+                            viewModel.selectTask(task)
+                            dismiss()
+                        }) {
+                            HStack {
+                                // Color indicator
+                                Circle()
+                                    .fill(getTaskColor(task))
+                                    .frame(width: 16, height: 16)
+                                    .padding(.trailing, 4)
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(task.name ?? "Unnamed Task")
+                                        .font(.bodyMedium)
+                                    
+                                    HStack {
+                                        Image(systemName: "clock")
+                                            .font(.caption)
+                                        Text("\(task.workDuration) min work, \(task.shortBreakDuration) min break")
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                                
+                                Spacer()
+                                
+                                // Show checkmark for currently selected task
+                                if viewModel.currentTask?.id == task.id {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.accentColor)
+                                }
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
                 }
             }
             .listStyle(InsetGroupedListStyle())
@@ -63,6 +88,17 @@ struct TaskPickerView: View {
                     dismiss()
                 }
             )
+            
+            .sheet(isPresented: $showingTaskCreationSheet) {
+                TaskEditView(mode: .new, onSave: { newTask in
+                    // When a task is saved, select it and close both sheets
+                    viewModel.selectTask(newTask)
+                    viewModel.refreshTaskList() // Refresh the task list
+                    showingTaskCreationSheet = false
+                    dismiss() // Dismiss the task picker as well
+                })
+            }
+            
             .overlay(
                 Group {
                     if viewModel.availableTasks.isEmpty {

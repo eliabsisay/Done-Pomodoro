@@ -166,6 +166,18 @@ final class WorkSessionViewModel: ObservableObject {
         }
     }
     
+    /// Refreshes the task list and optionally selects the first task if none is selected
+    func refreshTaskList() {
+        // Reload available tasks after a new task is created
+        loadAvailableTasks()
+        
+        // If we're coming directly back from creating a task,
+        // the most recent one is likely the one the user wants to use
+        if currentTask == nil, let lastTask = availableTasks.first {
+            selectTask(lastTask)
+        }
+    }
+    
     /// Updates timer settings from a modified task
     private func updateTimerSettingsFromTask(_ task: Task) {
         // Only update if no active session is running

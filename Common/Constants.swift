@@ -27,6 +27,7 @@ enum Constants {
         static let activeSessionDuration = "activeSessionDuration"
         static let activeSessionType = "activeSessionType"
         static let lastSelectedTaskID = "lastSelectedTaskID"
+        static let shouldRestoreSession = "shouldRestoreSession"
     }
    
     /// App-specific label strings for session types

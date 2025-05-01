@@ -18,8 +18,21 @@ struct RestoredSession {
 /// Responsible for restoring session state from UserDefaults if the user previously had a session in progress.
 struct SessionRestorer {
     
-    /// Returns true if a previously saved session exists in UserDefaults.
+    /// Returns true if a previously saved session exists in UserDefaults AND should be restored.
     static var hasPersistedSession: Bool {
+        // First, check the clean exit flag - if not a clean exit, don't restore
+        if !UserDefaults.standard.bool(forKey: "app_clean_exit") {
+            print("⚠️ App was force-terminated - session restoration disabled")
+            
+            // Clear any persisted session data
+            UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.activeSessionStartDate)
+            UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.activeSessionDuration)
+            UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.activeSessionType)
+            
+            return false
+        }
+        
+        // Then check if session data exists
         let hasDate = UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.activeSessionStartDate) != nil
         let hasDuration = UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.activeSessionDuration) != nil
         let hasType = UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.activeSessionType) != nil

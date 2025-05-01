@@ -22,7 +22,7 @@ final class WorkSessionViewModel: ObservableObject {
     @Published var availableTasks: [Task] = []
     @Published var showTaskCompletedOverlay: Bool = false
     @Published var showingTaskCreationSheet = false
-
+    
     
     // MARK: - Private Properties
     
@@ -81,19 +81,26 @@ final class WorkSessionViewModel: ObservableObject {
             
             self.hasLoadedInitialTask = true
             
+            // IMPORTANT: Ensure sessionStartTime is nil by default
+            self.sessionStartTime = nil
+            
             // Restore session or prepare for start
             if SessionRestorer.hasPersistedSession {
                 self.restoreIfNeeded()
             } else if let task = self.currentTask {
                 let defaultDuration = TimeInterval(task.workDuration * 60)
+                
+                // Always reset to initial state
+                self.sessionType = .work
+                self.totalDuration = defaultDuration
+                self.timeRemaining = defaultDuration
+                self.isRunning = false
+                self.sessionStartTime = nil  // Explicitly clear any session start time
+                
                 if task.startWorkSessionsAutomatically {
                     self.startSession(for: task, type: .work, duration: defaultDuration)
                     print("🚀 Auto-starting default session")
                 } else {
-                    self.sessionType = .work
-                    self.totalDuration = defaultDuration
-                    self.timeRemaining = defaultDuration
-                    self.isRunning = false
                     print("🛑 No prior session found — awaiting manual start")
                 }
             } else {
@@ -335,19 +342,19 @@ final class WorkSessionViewModel: ObservableObject {
     private func resetState() {
         // Clear out the current task so the picker becomes empty
         currentTask = nil
-
+        
         // Clear out any leftover timing state
         sessionStartTime = nil
         totalDuration = 0
         isRunning = false
         timeRemaining = 0
-
+        
         // Clean up any persisted session info
         UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.activeSessionStartDate)
         UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.activeSessionDuration)
         UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.activeSessionType)
     }
-
+    
     
     // MARK: - Restore Session
     
@@ -525,9 +532,9 @@ final class WorkSessionViewModel: ObservableObject {
         // 3. We have a timeRemaining value greater than 0
         // 4. We have a currentTask selected
         return !isRunning &&
-               sessionStartTime == nil &&
-               timeRemaining > 0 &&
-               currentTask != nil
+        sessionStartTime == nil &&
+        timeRemaining > 0 &&
+        currentTask != nil
     }
 }
 

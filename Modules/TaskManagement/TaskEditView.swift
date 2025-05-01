@@ -43,7 +43,7 @@ struct TaskEditView: View {
     @State private var longBreakDuration: Double = 15
     @State private var longBreakAfter: Double = 4
     @State private var dailyGoal: Double = 8
-    @State private var startBreaksAutomatically: Bool = true
+    @State private var startBreaksAutomatically: Bool = false
     @State private var startWorkSessionsAutomatically: Bool = false
     
     // Available colors to choose from

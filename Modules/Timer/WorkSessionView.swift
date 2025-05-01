@@ -21,15 +21,6 @@ struct WorkSessionView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 32) {
-//                // Launch 'How it Works'
-//                Button(action: {
-//                    viewModel.showingHowItWorksSheet = true
-//                }) {
-//                    Image(systemName: "questionmark.circle")
-//                        .font(.title3)
-//                        .foregroundColor(.primaryColor)
-//                }
-//                .padding(.horizontal)
                 // Task name with selector
                 Button(action: {
                     //If no incomplete tasks show task createion view

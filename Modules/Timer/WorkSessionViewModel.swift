@@ -22,6 +22,7 @@ final class WorkSessionViewModel: ObservableObject {
     @Published var availableTasks: [Task] = []
     @Published var showTaskCompletedOverlay: Bool = false
     @Published var showingTaskCreationSheet = false
+    @Published var showingHowItWorksSheet = false
     
     
     // MARK: - Private Properties

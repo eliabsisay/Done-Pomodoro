@@ -27,7 +27,6 @@ struct Done_PomodoroApp: App {
             UserDefaults.standard.set(false, forKey: "app_clean_exit")
             UserDefaults.standard.set(true, forKey: Constants.UserDefaultsKeys.shouldRestoreSession)
         
-        
         // 🔔 Ask the user for permission to send local notifications
         NotificationService.shared.requestPermission()
         

@@ -21,7 +21,15 @@ struct WorkSessionView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 32) {
-                
+//                // Launch 'How it Works'
+//                Button(action: {
+//                    viewModel.showingHowItWorksSheet = true
+//                }) {
+//                    Image(systemName: "questionmark.circle")
+//                        .font(.title3)
+//                        .foregroundColor(.primaryColor)
+//                }
+//                .padding(.horizontal)
                 // Task name with selector
                 Button(action: {
                     //If no incomplete tasks show task createion view
@@ -176,6 +184,9 @@ struct WorkSessionView: View {
                 }
             }
             .padding()
+            .sheet(isPresented: $viewModel.showingHowItWorksSheet) {
+                HowItWorksView()
+            }
             .sheet(isPresented: $viewModel.showingTaskPicker) {
                 TaskPickerView(viewModel: viewModel)
             }
@@ -192,6 +203,17 @@ struct WorkSessionView: View {
             .onAppear {
                 // Load available tasks when the view appears
                 viewModel.loadAvailableTasks()
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        viewModel.showingHowItWorksSheet = true
+                    }) {
+                        Image(systemName: "questionmark.circle")
+                            .font(.title3)
+                            .foregroundColor(.primaryColor)
+                    }
+                }
             }
             
             // 2) Success overlay

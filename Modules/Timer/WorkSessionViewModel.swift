@@ -243,18 +243,11 @@ final class WorkSessionViewModel: ObservableObject {
         AppEvents.post(AppEvents.taskModified, object: task)
         AppEvents.post(AppEvents.sessionCompleted)
         
-        // 🚀 Show the success overlay
-        showTaskCompletedOverlay = true
+        // Use the shared service to show the completion overlay
+        TaskCompletionOverlayService.shared.showOverlay(for: task)
         
         // Reset the state
         resetState()
-        
-        // Automatically hide the overlay after 1.5 seconds
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
-            withAnimation {
-                self?.showTaskCompletedOverlay = false
-            }
-        }
     }
     
     // MARK: - Timer Control

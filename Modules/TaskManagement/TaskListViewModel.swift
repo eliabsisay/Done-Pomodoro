@@ -26,6 +26,10 @@ final class TaskListViewModel: ObservableObject {
     /// Holds the task pending deletion
     @Published var taskToDelete: Task? = nil
     
+    
+    @Published var showTaskCompletedOverlay: Bool = false
+    @Published var lastCompletedTask: Task? = nil
+    
     // MARK: - Private Properties
     
     /// Repository for data access
@@ -70,14 +74,20 @@ final class TaskListViewModel: ObservableObject {
         AppEvents.post(AppEvents.taskModified, object: task)
     }
     
-    /// Marks a task as complete or incomplete
+    /// Marks a task as complete or incomplete, with animation when completing
     func toggleTaskCompletion(_ task: Task) {
-        task.isCompleted = !task.isCompleted
+        let wasCompleted = task.isCompleted
+        task.isCompleted = !wasCompleted
         
-        // If completing the task, set the completion date
-        if task.isCompleted {
+        // If completing the task (changing from incomplete to complete)
+        if !wasCompleted {
             task.completedAt = Date()
             print("✅ Marked task as complete: \(task.name ?? "Unnamed Task")")
+            
+            // Use the shared service to show the completion overlay
+            TaskCompletionOverlayService.shared.showOverlay(for: task) {
+                self.loadTasks() // Refresh the tasks list after overlay dismissal
+            }
         } else {
             task.completedAt = nil
             print("↩️ Unmarked task completion: \(task.name ?? "Unnamed Task")")
@@ -85,6 +95,9 @@ final class TaskListViewModel: ObservableObject {
         
         taskRepo.updateTask(task)
         loadTasks()
+        
+        // Post notification that the task was modified
+        AppEvents.post(AppEvents.taskModified, object: task)
     }
     
     /// Deletes a task from the repository

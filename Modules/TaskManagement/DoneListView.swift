@@ -5,7 +5,6 @@
 //  Created by Eliab Sisay on 4/24/25.
 //
 
-// DoneListView.swift
 import SwiftUI
 
 struct DoneListView: View {
@@ -15,9 +14,35 @@ struct DoneListView: View {
         List {
             ForEach(viewModel.doneTasks) { task in
                 TaskRowView(task: task, viewModel: viewModel)
+                    // Add leading swipe actions (left to right)
+                    .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                        // Edit button
+                        Button {
+                            viewModel.editingTask = task
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                        .tint(.blue)
+                        
+                        // Uncomplete button
+                        Button {
+                            viewModel.toggleTaskCompletion(task)
+                        } label: {
+                            Label("Uncomplete", systemImage: "arrow.uturn.backward")
+                        }
+                        .tint(.orange)
+                    }
+                    // Keep existing trailing swipe actions (right to left)
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            viewModel.taskToDelete = task
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
             }
             .onDelete { indexSet in
-                // Instead of direct deletion, set the task to delete
+                // Keep existing delete handling
                 for index in indexSet {
                     if index < viewModel.doneTasks.count {
                         viewModel.taskToDelete = viewModel.doneTasks[index]
@@ -48,7 +73,7 @@ struct DoneListView: View {
                 }
             }
         )
-        // Add confirmation dialog - same as in ToDoListView
+        // Keep the existing confirmation dialog
         .confirmationDialog(
             "Are you sure you want to delete this task?",
             isPresented: Binding(

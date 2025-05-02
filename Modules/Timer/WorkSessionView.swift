@@ -13,6 +13,8 @@ struct WorkSessionView: View {
     // ViewModel drives all timer logic
     @StateObject private var viewModel: WorkSessionViewModel
     
+    @ObservedObject private var overlayService = TaskCompletionOverlayService.shared
+    
     // Allows injecting a custom viewModel preview/testing
     init(viewModel: @autoclosure @escaping () -> WorkSessionViewModel = WorkSessionViewModel()) {
         _viewModel = StateObject(wrappedValue: viewModel())
@@ -129,7 +131,7 @@ struct WorkSessionView: View {
                             // Always disabled until they actually pick a task
                                 .disabled(!viewModel.isStartable)
                         } else {
-                            // --- Normal “paused” menu (no task‐complete yet) ---
+                            // --- Normal "paused" menu (no task‐complete yet) ---
                             VStack(spacing: 16) {
                                 // First row - Resume (common for all session types)
                                 Button("Resume") {
@@ -207,24 +209,13 @@ struct WorkSessionView: View {
                 }
             }
             
-            // 2) Success overlay
-            if viewModel.showTaskCompletedOverlay {
-                VStack(spacing: 12) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 60))
-                    Text("Task Completed!")
-                        .font(.title2.weight(.semibold))
-                }
-                .padding(24)
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
-                .shadow(radius: 8)
-                .transition(.scale.combined(with: .opacity))
+            // Success overlay
+            if overlayService.showTaskCompletedOverlay {
+                TaskCompletedOverlayView()
             }
         }
-        // 3) Animate whenever the flag changes
-        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: viewModel.showTaskCompletedOverlay)
+        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: overlayService.showTaskCompletedOverlay)
     }
-    
 }
 
 struct WorkSessionView_Previews: PreviewProvider {

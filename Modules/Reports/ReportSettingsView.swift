@@ -37,17 +37,16 @@ struct ReportSettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                // Units section
-                Section(header: Text("Data Display")) {
-                    Picker("Units", selection: $localUnit.onChange(trackChanges)) {
-                        ForEach(ReportUnit.allCases, id: \.self) { unit in
-                            Text(unit.rawValue).tag(unit)
-                        }
-                    }
-                    
-                    Picker("Chart Type", selection: $localChartType.onChange(trackChanges)) {
-                        ForEach(ChartType.allCases, id: \.self) { type in
-                            Text(type.rawValue).tag(type)
+                
+                // Task filter section
+                Section(header: Text("Task Filter")) {
+                    Picker("Selected Task", selection: $localSelectedTask.onChange(trackChanges)) {
+                        // Option for all tasks (nil)
+                        Text("All Tasks").tag(nil as Task?)
+                        
+                        // Option for each task
+                        ForEach(viewModel.allTasks) { task in
+                            Text(task.name ?? "Unnamed Task").tag(task as Task?)
                         }
                     }
                 }
@@ -72,18 +71,22 @@ struct ReportSettingsView: View {
                     }
                 }
                 
-                // Task filter section
-                Section(header: Text("Task Filter")) {
-                    Picker("Selected Task", selection: $localSelectedTask.onChange(trackChanges)) {
-                        // Option for all tasks (nil)
-                        Text("All Tasks").tag(nil as Task?)
-                        
-                        // Option for each task
-                        ForEach(viewModel.allTasks) { task in
-                            Text(task.name ?? "Unnamed Task").tag(task as Task?)
+                // Units section
+                Section(header: Text("Data Display")) {
+                    Picker("Units", selection: $localUnit.onChange(trackChanges)) {
+                        ForEach(ReportUnit.allCases, id: \.self) { unit in
+                            Text(unit.rawValue).tag(unit)
+                        }
+                    }
+                    
+                    Picker("Chart Type", selection: $localChartType.onChange(trackChanges)) {
+                        ForEach(ChartType.allCases, id: \.self) { type in
+                            Text(type.rawValue).tag(type)
                         }
                     }
                 }
+                
+                
             }
             .navigationTitle("Report Settings")
             .navigationBarItems(

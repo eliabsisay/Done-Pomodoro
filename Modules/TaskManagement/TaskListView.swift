@@ -15,7 +15,7 @@ struct TaskListView: View {
     @StateObject private var viewModel = TaskListViewModel()
     
     var body: some View {
-        ZStack {  // Add ZStack here
+        ZStack {
             VStack {
                 // Segmented control for tab selection
                 Picker("Task Status", selection: $selectedTab) {
@@ -51,7 +51,7 @@ struct TaskListView: View {
                 }
             }
             
-            // Custom Alert Overlay - Add this
+            // Custom Alert Overlay
             if viewModel.showingAlertView {
                 Color.black.opacity(0.3)
                     .edgesIgnoringSafeArea(.all)
@@ -65,8 +65,29 @@ struct TaskListView: View {
                     }
                 )
             }
-        }  // Close ZStack
+        }
         .navigationTitle("Tasks")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    if selectedTab == 0 { // To Do tab
+                        Picker("Sort By", selection: $viewModel.todoSortOption) {
+                            ForEach(TodoSortOption.allCases, id: \.self) { option in
+                                Text(option.rawValue).tag(option)
+                            }
+                        }
+                    } else { // Done tab
+                        Picker("Sort By", selection: $viewModel.doneSortOption) {
+                            ForEach(DoneSortOption.allCases, id: \.self) { option in
+                                Text(option.rawValue).tag(option)
+                            }
+                        }
+                    }
+                } label: {
+                    Label("Sort", systemImage: "arrow.up.arrow.down")
+                }
+            }
+        }
         .sheet(isPresented: $viewModel.showingNewTaskSheet) {
             TaskEditView(mode: .new, onSave: { task in
                 viewModel.addTask(task)

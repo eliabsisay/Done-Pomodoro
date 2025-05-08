@@ -9,6 +9,21 @@ import Foundation
 import SwiftUI
 import Combine
 
+// Define sorting options for To Do tasks
+enum TodoSortOption: String, CaseIterable {
+    case nameAZ = "Name (A-Z)"
+    case nameZA = "Name (Z-A)"
+    case creationDate = "Creation Date"
+}
+
+// Define sorting options for Done tasks
+enum DoneSortOption: String, CaseIterable {
+    case nameAZ = "Name (A-Z)"
+    case nameZA = "Name (Z-A)"
+    case creationDate = "Creation Date"
+    case completionDate = "Completion Date"
+}
+
 /// ViewModel for managing task lists and operations
 final class TaskListViewModel: ObservableObject {
     
@@ -29,7 +44,11 @@ final class TaskListViewModel: ObservableObject {
     @Published var showTaskCompletedOverlay: Bool = false
     @Published var lastCompletedTask: Task? = nil
     
-    // Alert properties for custom AlertView
+    /// Sorting options
+    @Published var todoSortOption: TodoSortOption = .creationDate
+    @Published var doneSortOption: DoneSortOption = .completionDate
+    
+    /// Alert properties for custom AlertView
     @Published var showingAlertView = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
@@ -72,14 +91,37 @@ final class TaskListViewModel: ObservableObject {
     
     // MARK: - Task Access
     
-    /// Returns only the incomplete tasks
+    /// Returns only the incomplete tasks, sorted according to the selected option
     var todoTasks: [Task] {
-        tasks.filter { !$0.isCompleted }
+        let unsortedTasks = tasks.filter { !$0.isCompleted }
+        
+        switch todoSortOption {
+        case .nameAZ:
+            return unsortedTasks.sorted { ($0.name ?? "").lowercased() < ($1.name ?? "").lowercased() }
+        case .nameZA:
+            return unsortedTasks.sorted { ($0.name ?? "").lowercased() > ($1.name ?? "").lowercased() }
+        case .creationDate:
+            // Newest first (most recent creation date at top)
+            return unsortedTasks.sorted { $0.createdAt ?? Date.distantPast > $1.createdAt ?? Date.distantPast }
+        }
     }
     
-    /// Returns only the completed tasks
+    /// Returns only the completed tasks, sorted according to the selected option
     var doneTasks: [Task] {
-        tasks.filter { $0.isCompleted }
+        let unsortedTasks = tasks.filter { $0.isCompleted }
+        
+        switch doneSortOption {
+        case .nameAZ:
+            return unsortedTasks.sorted { ($0.name ?? "").lowercased() < ($1.name ?? "").lowercased() }
+        case .nameZA:
+            return unsortedTasks.sorted { ($0.name ?? "").lowercased() > ($1.name ?? "").lowercased() }
+        case .creationDate:
+            // Newest first (most recent creation date at top)
+            return unsortedTasks.sorted { $0.createdAt ?? Date.distantPast > $1.createdAt ?? Date.distantPast }
+        case .completionDate:
+            // Newest first (most recent completion date at top)
+            return unsortedTasks.sorted { $0.completedAt ?? Date.distantPast > $1.completedAt ?? Date.distantPast }
+        }
     }
     
     // MARK: - Task Operations

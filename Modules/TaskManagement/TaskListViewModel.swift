@@ -44,6 +44,32 @@ final class TaskListViewModel: ObservableObject {
         NotificationCenter.default.post(name: Notification.Name("SwitchToTimerTab"), object: nil)
     }
     
+    private var taskSelectedObserver: NSObjectProtocol?
+    
+    // MARK: - Initialization and Cleanup
+    
+    init() {
+        // Load tasks initially
+        loadTasks()
+        
+        // Set up observer for task selection events
+        taskSelectedObserver = AppEvents.observe(AppEvents.taskSelected) { [weak self] _ in
+            // Refresh the task list to update the indicators
+            DispatchQueue.main.async {
+                self?.loadTasks()
+                print("🔄 Task list refreshed after task selection")
+            }
+        }
+    }
+    
+    deinit {
+        // Clean up observers
+        if let observer = taskSelectedObserver {
+            AppEvents.removeObserver(observer)
+            print("🧹 Removed task selection observer")
+        }
+    }
+    
     // MARK: - Task Access
     
     /// Returns only the incomplete tasks
@@ -156,5 +182,17 @@ final class TaskListViewModel: ObservableObject {
         
         // Optionally switch to Timer tab
         switchToTimerTab()
+    }
+    
+    // MARK: - Helper Methods
+    
+    /// Checks if a task is currently active in the timer
+    func isTaskActiveInTimer(_ task: Task) -> Bool {
+        guard let taskID = task.id?.uuidString,
+              let activeTaskID = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.lastSelectedTaskID) else {
+            return false
+        }
+        
+        return taskID == activeTaskID
     }
 }

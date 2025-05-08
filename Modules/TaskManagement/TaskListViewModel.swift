@@ -26,14 +26,23 @@ final class TaskListViewModel: ObservableObject {
     /// Holds the task pending deletion
     @Published var taskToDelete: Task? = nil
     
-    
     @Published var showTaskCompletedOverlay: Bool = false
     @Published var lastCompletedTask: Task? = nil
     
-    // MARK: - Private Properties
+    // Alert properties for custom AlertView
+    @Published var showingAlertView = false
+    @Published var alertTitle = ""
+    @Published var alertMessage = ""
+    
+    // MARK: - Private Properties / Functions
     
     /// Repository for data access
     private let taskRepo = TaskRepository()
+    
+    private func switchToTimerTab() {
+        // Use NotificationCenter to communicate with MainTabView
+        NotificationCenter.default.post(name: Notification.Name("SwitchToTimerTab"), object: nil)
+    }
     
     // MARK: - Task Access
     
@@ -105,5 +114,47 @@ final class TaskListViewModel: ObservableObject {
         taskRepo.deleteTask(task)
         loadTasks()
         print("🗑️ Deleted task: \(task.name ?? "Unnamed Task")")
+    }
+    
+    /// Selects a task to be used in the timer
+    func selectTaskForTimer(_ task: Task) {
+        // First check if there's an active session
+        if WorkSessionViewModel.isTaskInActiveSession(task) {
+            // If this is the active task, just switch to the timer tab
+            if let activeTaskID = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.lastSelectedTaskID),
+               let taskID = task.id?.uuidString,
+               activeTaskID == taskID {
+                switchToTimerTab()
+                return
+            }
+            
+            // Show alert that task is already active
+            alertTitle = "Session in Progress"
+            alertMessage = "This task is currently in an active session. Switch to the timer to continue working on it."
+            showingAlertView = true
+            return
+        }
+        
+        // Check if a different task is in an active session
+        if let activeTaskID = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.lastSelectedTaskID),
+           let taskID = task.id?.uuidString,
+           activeTaskID != taskID,
+           UserDefaults.standard.object(forKey: Constants.UserDefaultsKeys.activeSessionStartDate) != nil {
+            
+            // Show alert that another task is active
+            alertTitle = "Cannot Switch Tasks"
+            alertMessage = "You cannot switch tasks while a session is in progress. Please complete or cancel the current session first."
+            showingAlertView = true
+            return
+        }
+        
+        // Set this task as the selected task
+        UserDefaults.standard.set(task.id?.uuidString, forKey: Constants.UserDefaultsKeys.lastSelectedTaskID)
+        
+        // Post notification that task was selected
+        AppEvents.post(AppEvents.taskSelected, object: task)
+        
+        // Optionally switch to Timer tab
+        switchToTimerTab()
     }
 }

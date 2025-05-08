@@ -61,13 +61,19 @@ struct TaskRowView: View {
             
             // Menu for additional actions
             Menu {
+                if !task.isCompleted {
+                    Button(action: {
+                        viewModel.selectTaskForTimer(task)
+                    }) {
+                        Label("Start Timer", systemImage: "timer")
+                    }
+                }       
                 Button(action: {
                     viewModel.toggleTaskCompletion(task)
                 }) {
                     Label(task.isCompleted ? "Mark as Incomplete" : "Mark as Complete",
                           systemImage: task.isCompleted ? "arrow.uturn.backward" : "checkmark")
                 }
-                
                 Button(action: {
                     viewModel.editingTask = task
                 }) {

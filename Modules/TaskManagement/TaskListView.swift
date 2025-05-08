@@ -15,40 +15,57 @@ struct TaskListView: View {
     @StateObject private var viewModel = TaskListViewModel()
     
     var body: some View {
-        VStack {
-            // Segmented control for tab selection
-            Picker("Task Status", selection: $selectedTab) {
-                Text("To Do").tag(0)
-                Text("Done").tag(1)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding(.horizontal)
-            
-            // Display the appropriate list based on the selected tab
-            if selectedTab == 0 {
-                ToDoListView(viewModel: viewModel)
-            } else {
-                DoneListView(viewModel: viewModel)
-            }
-            
-            // Add button for creating new tasks (only visible in To Do tab)
-            if selectedTab == 0 {
-                Button(action: {
-                    viewModel.showingNewTaskSheet = true
-                }) {
-                    HStack {
-                        Image(systemName: "plus.circle.fill")
-                        Text("Add Task")
-                    }
-                    .font(.headline)
-                    .padding()
-                    .background(Color.primaryColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+        ZStack {  // Add ZStack here
+            VStack {
+                // Segmented control for tab selection
+                Picker("Task Status", selection: $selectedTab) {
+                    Text("To Do").tag(0)
+                    Text("Done").tag(1)
                 }
-                .padding(.bottom)
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
+                
+                // Display the appropriate list based on the selected tab
+                if selectedTab == 0 {
+                    ToDoListView(viewModel: viewModel)
+                } else {
+                    DoneListView(viewModel: viewModel)
+                }
+                
+                // Add button for creating new tasks (only visible in To Do tab)
+                if selectedTab == 0 {
+                    Button(action: {
+                        viewModel.showingNewTaskSheet = true
+                    }) {
+                        HStack {
+                            Image(systemName: "plus.circle.fill")
+                            Text("Add Task")
+                        }
+                        .font(.headline)
+                        .padding()
+                        .background(Color.primaryColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                    }
+                    .padding(.bottom)
+                }
             }
-        }
+            
+            // Custom Alert Overlay - Add this
+            if viewModel.showingAlertView {
+                Color.black.opacity(0.3)
+                    .edgesIgnoringSafeArea(.all)
+                
+                AlertView(
+                    title: viewModel.alertTitle,
+                    message: viewModel.alertMessage,
+                    buttonText: "OK",
+                    action: {
+                        viewModel.showingAlertView = false
+                    }
+                )
+            }
+        }  // Close ZStack
         .navigationTitle("Tasks")
         .sheet(isPresented: $viewModel.showingNewTaskSheet) {
             TaskEditView(mode: .new, onSave: { task in
@@ -74,7 +91,6 @@ struct TaskListView: View {
                 })
             }
         }
-        
         .onAppear {
             viewModel.loadTasks()
         }
@@ -89,3 +105,4 @@ struct TaskListView_Previews: PreviewProvider {
         }
     }
 }
+

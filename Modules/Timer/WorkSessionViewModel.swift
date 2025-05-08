@@ -35,15 +35,29 @@ final class WorkSessionViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var taskModifiedObserver: NSObjectProtocol?
     private var sessionCompletionObserver: NSObjectProtocol?
+    private var taskSelectedObserver: NSObjectProtocol?
     
     private var sessionStartTime: Date?
     private var totalDuration: TimeInterval = 0
     private var hasLoadedInitialTask = false
     
+    
+    
     // MARK: - Init
     
     init() {
         bindToTimer()
+        
+        // Listen for task selection events
+        taskSelectedObserver = AppEvents.observe(AppEvents.taskSelected) { [weak self] notification in
+            if let selectedTask = notification.object as? Task {
+                // Only select the task if no session is in progress
+                if self?.isRunning == false {
+                    self?.selectTask(selectedTask)
+                    print("🎯 Task selected from task list: \(selectedTask.name ?? "Unnamed Task")")
+                }
+            }
+        }
         
         // Listen for task modification events
         taskModifiedObserver = AppEvents.observe(AppEvents.taskModified) { [weak self] notification in
@@ -117,6 +131,9 @@ final class WorkSessionViewModel: ObservableObject {
         }
         
         if let observer = sessionCompletionObserver {
+            AppEvents.removeObserver(observer)
+        }
+        if let observer = taskSelectedObserver {
             AppEvents.removeObserver(observer)
         }
     }

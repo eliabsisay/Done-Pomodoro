@@ -43,6 +43,8 @@
 		E004573B2DBDBB4F00042024 /* AppEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004573A2DBDBB4F00042024 /* AppEvents.swift */; };
 		E00457652DC0420F00042024 /* TaskPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457642DC0420F00042024 /* TaskPickerView.swift */; };
 		E00457672DC0473400042024 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457662DC0473400042024 /* AlertView.swift */; };
+		E00457912DC583EC00042024 /* TaskCompletionOverlayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457902DC583EC00042024 /* TaskCompletionOverlayService.swift */; };
+		E00457932DC5844000042024 /* TaskCompletedOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457922DC5844000042024 /* TaskCompletedOverlayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +105,8 @@
 		E004573A2DBDBB4F00042024 /* AppEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEvents.swift; sourceTree = "<group>"; };
 		E00457642DC0420F00042024 /* TaskPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPickerView.swift; sourceTree = "<group>"; };
 		E00457662DC0473400042024 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		E00457902DC583EC00042024 /* TaskCompletionOverlayService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletionOverlayService.swift; sourceTree = "<group>"; };
+		E00457922DC5844000042024 /* TaskCompletedOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletedOverlayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -281,6 +285,8 @@
 				E004569A2DBAF54700042024 /* TaskRowView.swift */,
 				E004569B2DBAF54700042024 /* ToDoListView.swift */,
 				E00457662DC0473400042024 /* AlertView.swift */,
+				E00457902DC583EC00042024 /* TaskCompletionOverlayService.swift */,
+				E00457922DC5844000042024 /* TaskCompletedOverlayView.swift */,
 			);
 			path = TaskManagement;
 			sourceTree = "<group>";
@@ -450,6 +456,7 @@
 				E00456D12DBB17C300042024 /* HowItWorksView.swift in Sources */,
 				E00457312DBC235800042024 /* ReportBarChartView.swift in Sources */,
 				E00456382DB46AD300042024 /* SessionRestorer.swift in Sources */,
+				E00457932DC5844000042024 /* TaskCompletedOverlayView.swift in Sources */,
 				E00456042D9F4E1E00042024 /* SettingService.swift in Sources */,
 				E00455ED2D9CF34600042024 /* Color+Extensions.swift in Sources */,
 				E00456D52DBB29D800042024 /* SettingsView.swift in Sources */,
@@ -460,6 +467,7 @@
 				E00457392DBC282900042024 /* ReportCache.swift in Sources */,
 				E00456342DB44C1300042024 /* DevEnvironment.swift in Sources */,
 				E004569C2DBAF54700042024 /* TaskRowView.swift in Sources */,
+				E00457912DC583EC00042024 /* TaskCompletionOverlayService.swift in Sources */,
 				E004569D2DBAF54700042024 /* TaskEditView.swift in Sources */,
 				E004573B2DBDBB4F00042024 /* AppEvents.swift in Sources */,
 				E004569E2DBAF54700042024 /* DoneListView.swift in Sources */,
@@ -646,7 +654,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -676,7 +684,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

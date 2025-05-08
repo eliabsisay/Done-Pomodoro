@@ -15,41 +15,79 @@ struct TaskListView: View {
     @StateObject private var viewModel = TaskListViewModel()
     
     var body: some View {
-        VStack {
-            // Segmented control for tab selection
-            Picker("Task Status", selection: $selectedTab) {
-                Text("To Do").tag(0)
-                Text("Done").tag(1)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding(.horizontal)
-            
-            // Display the appropriate list based on the selected tab
-            if selectedTab == 0 {
-                ToDoListView(viewModel: viewModel)
-            } else {
-                DoneListView(viewModel: viewModel)
-            }
-            
-            // Add button for creating new tasks (only visible in To Do tab)
-            if selectedTab == 0 {
-                Button(action: {
-                    viewModel.showingNewTaskSheet = true
-                }) {
-                    HStack {
-                        Image(systemName: "plus.circle.fill")
-                        Text("Add Task")
-                    }
-                    .font(.headline)
-                    .padding()
-                    .background(Color.primaryColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+        ZStack {
+            VStack {
+                // Segmented control for tab selection
+                Picker("Task Status", selection: $selectedTab) {
+                    Text("To Do").tag(0)
+                    Text("Done").tag(1)
                 }
-                .padding(.bottom)
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
+                
+                // Display the appropriate list based on the selected tab
+                if selectedTab == 0 {
+                    ToDoListView(viewModel: viewModel)
+                } else {
+                    DoneListView(viewModel: viewModel)
+                }
+                
+                // Add button for creating new tasks (only visible in To Do tab)
+                if selectedTab == 0 {
+                    Button(action: {
+                        viewModel.showingNewTaskSheet = true
+                    }) {
+                        HStack {
+                            Image(systemName: "plus.circle.fill")
+                            Text("Add Task")
+                        }
+                        .font(.headline)
+                        .padding()
+                        .background(Color.primaryColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                    }
+                    .padding(.bottom)
+                }
+            }
+            
+            // Custom Alert Overlay
+            if viewModel.showingAlertView {
+                Color.black.opacity(0.3)
+                    .edgesIgnoringSafeArea(.all)
+                
+                AlertView(
+                    title: viewModel.alertTitle,
+                    message: viewModel.alertMessage,
+                    buttonText: "OK",
+                    action: {
+                        viewModel.showingAlertView = false
+                    }
+                )
             }
         }
         .navigationTitle("Tasks")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    if selectedTab == 0 { // To Do tab
+                        Picker("Sort By", selection: $viewModel.todoSortOption) {
+                            ForEach(TodoSortOption.allCases, id: \.self) { option in
+                                Text(option.rawValue).tag(option)
+                            }
+                        }
+                    } else { // Done tab
+                        Picker("Sort By", selection: $viewModel.doneSortOption) {
+                            ForEach(DoneSortOption.allCases, id: \.self) { option in
+                                Text(option.rawValue).tag(option)
+                            }
+                        }
+                    }
+                } label: {
+                    Label("Sort", systemImage: "arrow.up.arrow.down")
+                }
+            }
+        }
         .sheet(isPresented: $viewModel.showingNewTaskSheet) {
             TaskEditView(mode: .new, onSave: { task in
                 viewModel.addTask(task)
@@ -74,7 +112,6 @@ struct TaskListView: View {
                 })
             }
         }
-        
         .onAppear {
             viewModel.loadTasks()
         }
@@ -89,3 +126,4 @@ struct TaskListView_Previews: PreviewProvider {
         }
     }
 }
+

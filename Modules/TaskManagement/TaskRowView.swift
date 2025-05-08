@@ -38,9 +38,18 @@ struct TaskRowView: View {
                 .padding(.trailing, 4)
             
             VStack(alignment: .leading, spacing: 4) {
-                Text(task.name ?? "Unnamed Task")
-                    .font(.bodyMedium)
-                    .strikethrough(task.isCompleted)
+                HStack {
+                    Text(task.name ?? "Unnamed Task")
+                        .font(.bodyMedium)
+                        .strikethrough(task.isCompleted)
+                    
+                    // Active task indicator
+                    if !task.isCompleted && viewModel.isTaskActiveInTimer(task) {
+                        Image(systemName: "timer.circle.fill")
+                            .foregroundColor(.primaryColor)
+                            .font(.caption)
+                    }
+                }
                 
                 if task.isCompleted, !completedDateText.isEmpty {
                     Text(completedDateText)
@@ -61,13 +70,19 @@ struct TaskRowView: View {
             
             // Menu for additional actions
             Menu {
+                if !task.isCompleted {
+                    Button(action: {
+                        viewModel.selectTaskForTimer(task)
+                    }) {
+                        Label("Start Timer", systemImage: "timer")
+                    }
+                }
                 Button(action: {
                     viewModel.toggleTaskCompletion(task)
                 }) {
                     Label(task.isCompleted ? "Mark as Incomplete" : "Mark as Complete",
                           systemImage: task.isCompleted ? "arrow.uturn.backward" : "checkmark")
                 }
-                
                 Button(action: {
                     viewModel.editingTask = task
                 }) {

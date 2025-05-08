@@ -15,6 +15,9 @@ struct AppEvents {
     /// Posted when a task is created or updated
     static let taskModified = Notification.Name("taskModifiedNotification")
     
+    /// Posted when a task is selected for work session
+    static let taskSelected = Notification.Name("taskSelectedNotification")
+    
     /// Posts a notification for the given event
     static func post(_ event: Notification.Name, object: Any? = nil, userInfo: [AnyHashable: Any]? = nil) {
         NotificationCenter.default.post(name: event, object: object, userInfo: userInfo)

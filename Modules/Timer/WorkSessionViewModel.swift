@@ -22,7 +22,8 @@ final class WorkSessionViewModel: ObservableObject {
     @Published var availableTasks: [Task] = []
     @Published var showTaskCompletedOverlay: Bool = false
     @Published var showingTaskCreationSheet = false
-
+    @Published var showingHowItWorksSheet = false
+    
     
     // MARK: - Private Properties
     
@@ -34,15 +35,29 @@ final class WorkSessionViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var taskModifiedObserver: NSObjectProtocol?
     private var sessionCompletionObserver: NSObjectProtocol?
+    private var taskSelectedObserver: NSObjectProtocol?
     
     private var sessionStartTime: Date?
     private var totalDuration: TimeInterval = 0
     private var hasLoadedInitialTask = false
     
+    
+    
     // MARK: - Init
     
     init() {
         bindToTimer()
+        
+        // Listen for task selection events
+        taskSelectedObserver = AppEvents.observe(AppEvents.taskSelected) { [weak self] notification in
+            if let selectedTask = notification.object as? Task {
+                // Only select the task if no session is in progress
+                if self?.isRunning == false {
+                    self?.selectTask(selectedTask)
+                    print("🎯 Task selected from task list: \(selectedTask.name ?? "Unnamed Task")")
+                }
+            }
+        }
         
         // Listen for task modification events
         taskModifiedObserver = AppEvents.observe(AppEvents.taskModified) { [weak self] notification in
@@ -81,19 +96,26 @@ final class WorkSessionViewModel: ObservableObject {
             
             self.hasLoadedInitialTask = true
             
+            // IMPORTANT: Ensure sessionStartTime is nil by default
+            self.sessionStartTime = nil
+            
             // Restore session or prepare for start
             if SessionRestorer.hasPersistedSession {
                 self.restoreIfNeeded()
             } else if let task = self.currentTask {
                 let defaultDuration = TimeInterval(task.workDuration * 60)
+                
+                // Always reset to initial state
+                self.sessionType = .work
+                self.totalDuration = defaultDuration
+                self.timeRemaining = defaultDuration
+                self.isRunning = false
+                self.sessionStartTime = nil  // Explicitly clear any session start time
+                
                 if task.startWorkSessionsAutomatically {
                     self.startSession(for: task, type: .work, duration: defaultDuration)
                     print("🚀 Auto-starting default session")
                 } else {
-                    self.sessionType = .work
-                    self.totalDuration = defaultDuration
-                    self.timeRemaining = defaultDuration
-                    self.isRunning = false
                     print("🛑 No prior session found — awaiting manual start")
                 }
             } else {
@@ -109,6 +131,9 @@ final class WorkSessionViewModel: ObservableObject {
         }
         
         if let observer = sessionCompletionObserver {
+            AppEvents.removeObserver(observer)
+        }
+        if let observer = taskSelectedObserver {
             AppEvents.removeObserver(observer)
         }
     }
@@ -163,6 +188,18 @@ final class WorkSessionViewModel: ObservableObject {
         // Update UserDefaults to remember the selected task
         if let taskID = task.id {
             UserDefaults.standard.set(taskID.uuidString, forKey: Constants.UserDefaultsKeys.lastSelectedTaskID)
+        }
+    }
+    
+    /// Refreshes the task list and optionally selects the first task if none is selected
+    func refreshTaskList() {
+        // Reload available tasks after a new task is created
+        loadAvailableTasks()
+        
+        // If we're coming directly back from creating a task,
+        // the most recent one is likely the one the user wants to use
+        if currentTask == nil, let lastTask = availableTasks.first {
+            selectTask(lastTask)
         }
     }
     
@@ -223,18 +260,11 @@ final class WorkSessionViewModel: ObservableObject {
         AppEvents.post(AppEvents.taskModified, object: task)
         AppEvents.post(AppEvents.sessionCompleted)
         
-        // 🚀 Show the success overlay
-        showTaskCompletedOverlay = true
+        // Use the shared service to show the completion overlay
+        TaskCompletionOverlayService.shared.showOverlay(for: task)
         
         // Reset the state
         resetState()
-        
-        // Automatically hide the overlay after 1.5 seconds
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
-            withAnimation {
-                self?.showTaskCompletedOverlay = false
-            }
-        }
     }
     
     // MARK: - Timer Control
@@ -323,19 +353,19 @@ final class WorkSessionViewModel: ObservableObject {
     private func resetState() {
         // Clear out the current task so the picker becomes empty
         currentTask = nil
-
+        
         // Clear out any leftover timing state
         sessionStartTime = nil
         totalDuration = 0
         isRunning = false
         timeRemaining = 0
-
+        
         // Clean up any persisted session info
         UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.activeSessionStartDate)
         UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.activeSessionDuration)
         UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKeys.activeSessionType)
     }
-
+    
     
     // MARK: - Restore Session
     
@@ -513,9 +543,9 @@ final class WorkSessionViewModel: ObservableObject {
         // 3. We have a timeRemaining value greater than 0
         // 4. We have a currentTask selected
         return !isRunning &&
-               sessionStartTime == nil &&
-               timeRemaining > 0 &&
-               currentTask != nil
+        sessionStartTime == nil &&
+        timeRemaining > 0 &&
+        currentTask != nil
     }
 }
 

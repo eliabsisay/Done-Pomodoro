@@ -13,6 +13,8 @@ struct WorkSessionView: View {
     // ViewModel drives all timer logic
     @StateObject private var viewModel: WorkSessionViewModel
     
+    @ObservedObject private var overlayService = TaskCompletionOverlayService.shared
+    
     // Allows injecting a custom viewModel preview/testing
     init(viewModel: @autoclosure @escaping () -> WorkSessionViewModel = WorkSessionViewModel()) {
         _viewModel = StateObject(wrappedValue: viewModel())
@@ -21,7 +23,6 @@ struct WorkSessionView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 32) {
-                
                 // Task name with selector
                 Button(action: {
                     //If no incomplete tasks show task createion view
@@ -130,7 +131,7 @@ struct WorkSessionView: View {
                             // Always disabled until they actually pick a task
                                 .disabled(!viewModel.isStartable)
                         } else {
-                            // --- Normal “paused” menu (no task‐complete yet) ---
+                            // --- Normal "paused" menu (no task‐complete yet) ---
                             VStack(spacing: 16) {
                                 // First row - Resume (common for all session types)
                                 Button("Resume") {
@@ -176,6 +177,9 @@ struct WorkSessionView: View {
                 }
             }
             .padding()
+            .sheet(isPresented: $viewModel.showingHowItWorksSheet) {
+                HowItWorksView()
+            }
             .sheet(isPresented: $viewModel.showingTaskPicker) {
                 TaskPickerView(viewModel: viewModel)
             }
@@ -193,25 +197,25 @@ struct WorkSessionView: View {
                 // Load available tasks when the view appears
                 viewModel.loadAvailableTasks()
             }
-            
-            // 2) Success overlay
-            if viewModel.showTaskCompletedOverlay {
-                VStack(spacing: 12) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 60))
-                    Text("Task Completed!")
-                        .font(.title2.weight(.semibold))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        viewModel.showingHowItWorksSheet = true
+                    }) {
+                        Image(systemName: "questionmark.circle")
+                            .font(.title3)
+                            .foregroundColor(.primaryColor)
+                    }
                 }
-                .padding(24)
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
-                .shadow(radius: 8)
-                .transition(.scale.combined(with: .opacity))
+            }
+            
+            // Success overlay
+            if overlayService.showTaskCompletedOverlay {
+                TaskCompletedOverlayView()
             }
         }
-        // 3) Animate whenever the flag changes
-        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: viewModel.showTaskCompletedOverlay)
+        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: overlayService.showTaskCompletedOverlay)
     }
-    
 }
 
 struct WorkSessionView_Previews: PreviewProvider {

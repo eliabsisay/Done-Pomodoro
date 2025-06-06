@@ -1,5 +1,5 @@
 //
-//  SettingService.swift
+//  SettingsService.swift
 //  Done Pomodoro
 //
 //  Created by Eliab Sisay on 4/3/25.

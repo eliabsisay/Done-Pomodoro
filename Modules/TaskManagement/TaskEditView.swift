@@ -45,6 +45,9 @@ struct TaskEditView: View {
     @State private var dailyGoal: Double = 8
     @State private var startBreaksAutomatically: Bool = false
     @State private var startWorkSessionsAutomatically: Bool = false
+
+    // Track focus state for the task name field
+    @FocusState private var isNameFieldFocused: Bool
     
     // Available colors to choose from
     private let colorOptions: [Color] = [.red, .orange, .yellow, .green, .blue, .indigo, .purple, .pink]
@@ -65,8 +68,9 @@ struct TaskEditView: View {
         NavigationView {
             Form {
                 // Task name section
-                Section(header: Text("Task Details")) {
+                Section(header: Text("Task Name")) {
                     TextField("Task Name", text: $name)
+                        .focused($isNameFieldFocused)
                 }
                 
                 // Color selection section
@@ -138,6 +142,15 @@ struct TaskEditView: View {
                 Section(header: Text("Automation")) {
                     Toggle("Auto-Start Breaks", isOn: $startBreaksAutomatically)
                     Toggle("Auto-Start Work Sessions", isOn: $startWorkSessionsAutomatically)
+                }
+            }
+            .onTapGesture {
+                // Dismiss the keyboard when tapping outside the text field
+                isNameFieldFocused = false
+            }
+            .onChange(of: isNameFieldFocused) { isFocused in
+                if !isFocused {
+                    UIApplication.shared.endEditing()
                 }
             }
             .navigationTitle(mode == .new ? "New Task" : "Edit Task")

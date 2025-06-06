@@ -45,6 +45,44 @@
 		E00457672DC0473400042024 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457662DC0473400042024 /* AlertView.swift */; };
 		E00457912DC583EC00042024 /* TaskCompletionOverlayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457902DC583EC00042024 /* TaskCompletionOverlayService.swift */; };
 		E00457932DC5844000042024 /* TaskCompletedOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457922DC5844000042024 /* TaskCompletedOverlayView.swift */; };
+		E07A74542DEE037A00E02FBC /* WorkSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004562D2DA88FB700042024 /* WorkSessionViewModel.swift */; };
+		E07A74552DEE037A00E02FBC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455EA2D9CEC2100042024 /* Constants.swift */; };
+		E07A74562DEE037A00E02FBC /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456932DBAEFF200042024 /* MainTabView.swift */; };
+		E07A74572DEE037A00E02FBC /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456CE2DBB177B00042024 /* AboutView.swift */; };
+		E07A74582DEE037A00E02FBC /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456352DB4685C00042024 /* SessionManager.swift */; };
+		E07A74592DEE037A00E02FBC /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455F92D9F09A500042024 /* TaskRepository.swift */; };
+		E07A745A2DEE037A00E02FBC /* DataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455FD2D9F1A6500042024 /* DataSeeder.swift */; };
+		E07A745B2DEE037A00E02FBC /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456012D9F452F00042024 /* NotificationService.swift */; };
+		E07A745C2DEE037A00E02FBC /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457662DC0473400042024 /* AlertView.swift */; };
+		E07A745D2DEE037A00E02FBC /* WorkSessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455FB2D9F169F00042024 /* WorkSessionRepository.swift */; };
+		E07A745E2DEE037A00E02FBC /* TaskPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457642DC0420F00042024 /* TaskPickerView.swift */; };
+		E07A745F2DEE037A00E02FBC /* ReportsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004572E2DBC224000042024 /* ReportsViewModel.swift */; };
+		E07A74602DEE037A00E02FBC /* ReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457342DBC264400042024 /* ReportsView.swift */; };
+		E07A74612DEE037A00E02FBC /* TimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455FF2D9F41FD00042024 /* TimerService.swift */; };
+		E07A74622DEE037A00E02FBC /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455EE2D9CF48900042024 /* Font+Extensions.swift */; };
+		E07A74632DEE037A00E02FBC /* ReportSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457362DBC269A00042024 /* ReportSettingsView.swift */; };
+		E07A74642DEE037A00E02FBC /* HowItWorksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456D02DBB17C300042024 /* HowItWorksView.swift */; };
+		E07A74652DEE037A00E02FBC /* ReportBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457302DBC235800042024 /* ReportBarChartView.swift */; };
+		E07A74662DEE037A00E02FBC /* SessionRestorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456372DB46AD300042024 /* SessionRestorer.swift */; };
+		E07A74672DEE037A00E02FBC /* TaskCompletedOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457922DC5844000042024 /* TaskCompletedOverlayView.swift */; };
+		E07A74682DEE037A00E02FBC /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456032D9F4E1E00042024 /* SettingService.swift */; };
+		E07A74692DEE037A00E02FBC /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455EC2D9CF34600042024 /* Color+Extensions.swift */; };
+		E07A746A2DEE037A00E02FBC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456D42DBB29D800042024 /* SettingsView.swift */; };
+		E07A746B2DEE037A00E02FBC /* TimerInterval+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456312DA896FC00042024 /* TimerInterval+Extensions.swift */; };
+		E07A746C2DEE037A00E02FBC /* WorkSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004562F2DA8945900042024 /* WorkSessionView.swift */; };
+		E07A746D2DEE037A00E02FBC /* ReportPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457322DBC23E900042024 /* ReportPieChartView.swift */; };
+		E07A746E2DEE037A00E02FBC /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456CC2DBB16CB00042024 /* SettingViewModel.swift */; };
+		E07A746F2DEE037A00E02FBC /* ReportCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457382DBC282900042024 /* ReportCache.swift */; };
+		E07A74702DEE037A00E02FBC /* DevEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456332DB44C1300042024 /* DevEnvironment.swift */; };
+		E07A74712DEE037A00E02FBC /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004569A2DBAF54700042024 /* TaskRowView.swift */; };
+		E07A74722DEE037A00E02FBC /* TaskCompletionOverlayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457902DC583EC00042024 /* TaskCompletionOverlayService.swift */; };
+		E07A74732DEE037A00E02FBC /* TaskEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456972DBAF54700042024 /* TaskEditView.swift */; };
+		E07A74742DEE037A00E02FBC /* AppEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004573A2DBDBB4F00042024 /* AppEvents.swift */; };
+		E07A74752DEE037A00E02FBC /* DoneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456962DBAF54700042024 /* DoneListView.swift */; };
+		E07A74762DEE037A00E02FBC /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456982DBAF54700042024 /* TaskListView.swift */; };
+		E07A74772DEE037A00E02FBC /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456992DBAF54700042024 /* TaskListViewModel.swift */; };
+		E07A74782DEE037A00E02FBC /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004569B2DBAF54700042024 /* ToDoListView.swift */; };
+		E07A747B2DEE037A00E02FBC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E00455F02D9CF63000042024 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,11 +145,30 @@
 		E00457662DC0473400042024 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		E00457902DC583EC00042024 /* TaskCompletionOverlayService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletionOverlayService.swift; sourceTree = "<group>"; };
 		E00457922DC5844000042024 /* TaskCompletedOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletedOverlayView.swift; sourceTree = "<group>"; };
+		E07A747F2DEE037A00E02FBC /* Done Pomodoro copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Done Pomodoro copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E07A74802DEE037A00E02FBC /* Exceptions for "Done Pomodoro" folder in "Done Pomodoro copy" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				ContentView.swift,
+				Done_Pomodoro.xcdatamodeld,
+				Done_PomodoroApp.swift,
+				Persistence.swift,
+				"Preview Content/Preview Assets.xcassets",
+			);
+			target = E07A74522DEE037A00E02FBC /* Done Pomodoro copy */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E004557A2D9B931000042024 /* Done Pomodoro */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E07A74802DEE037A00E02FBC /* Exceptions for "Done Pomodoro" folder in "Done Pomodoro copy" target */,
+			);
 			path = "Done Pomodoro";
 			sourceTree = "<group>";
 		};
@@ -149,6 +206,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E07A74792DEE037A00E02FBC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -174,6 +238,7 @@
 				E00455782D9B931000042024 /* Done Pomodoro.app */,
 				E004558D2D9B931200042024 /* Done PomodoroTests.xctest */,
 				E00455972D9B931200042024 /* Done PomodoroUITests.xctest */,
+				E07A747F2DEE037A00E02FBC /* Done Pomodoro copy.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -362,6 +427,28 @@
 			productReference = E00455972D9B931200042024 /* Done PomodoroUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		E07A74522DEE037A00E02FBC /* Done Pomodoro copy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E07A747C2DEE037A00E02FBC /* Build configuration list for PBXNativeTarget "Done Pomodoro copy" */;
+			buildPhases = (
+				E07A74532DEE037A00E02FBC /* Sources */,
+				E07A74792DEE037A00E02FBC /* Frameworks */,
+				E07A747A2DEE037A00E02FBC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				E004557A2D9B931000042024 /* Done Pomodoro */,
+			);
+			name = "Done Pomodoro copy";
+			packageProductDependencies = (
+			);
+			productName = "Done Pomodoro";
+			productReference = E07A747F2DEE037A00E02FBC /* Done Pomodoro copy.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -403,6 +490,7 @@
 				E00455772D9B931000042024 /* Done Pomodoro */,
 				E004558C2D9B931200042024 /* Done PomodoroTests */,
 				E00455962D9B931200042024 /* Done PomodoroUITests */,
+				E07A74522DEE037A00E02FBC /* Done Pomodoro copy */,
 			);
 		};
 /* End PBXProject section */
@@ -427,6 +515,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E07A747A2DEE037A00E02FBC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E07A747B2DEE037A00E02FBC /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +584,50 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E07A74532DEE037A00E02FBC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E07A74542DEE037A00E02FBC /* WorkSessionViewModel.swift in Sources */,
+				E07A74552DEE037A00E02FBC /* Constants.swift in Sources */,
+				E07A74562DEE037A00E02FBC /* MainTabView.swift in Sources */,
+				E07A74572DEE037A00E02FBC /* AboutView.swift in Sources */,
+				E07A74582DEE037A00E02FBC /* SessionManager.swift in Sources */,
+				E07A74592DEE037A00E02FBC /* TaskRepository.swift in Sources */,
+				E07A745A2DEE037A00E02FBC /* DataSeeder.swift in Sources */,
+				E07A745B2DEE037A00E02FBC /* NotificationService.swift in Sources */,
+				E07A745C2DEE037A00E02FBC /* AlertView.swift in Sources */,
+				E07A745D2DEE037A00E02FBC /* WorkSessionRepository.swift in Sources */,
+				E07A745E2DEE037A00E02FBC /* TaskPickerView.swift in Sources */,
+				E07A745F2DEE037A00E02FBC /* ReportsViewModel.swift in Sources */,
+				E07A74602DEE037A00E02FBC /* ReportsView.swift in Sources */,
+				E07A74612DEE037A00E02FBC /* TimerService.swift in Sources */,
+				E07A74622DEE037A00E02FBC /* Font+Extensions.swift in Sources */,
+				E07A74632DEE037A00E02FBC /* ReportSettingsView.swift in Sources */,
+				E07A74642DEE037A00E02FBC /* HowItWorksView.swift in Sources */,
+				E07A74652DEE037A00E02FBC /* ReportBarChartView.swift in Sources */,
+				E07A74662DEE037A00E02FBC /* SessionRestorer.swift in Sources */,
+				E07A74672DEE037A00E02FBC /* TaskCompletedOverlayView.swift in Sources */,
+				E07A74682DEE037A00E02FBC /* SettingService.swift in Sources */,
+				E07A74692DEE037A00E02FBC /* Color+Extensions.swift in Sources */,
+				E07A746A2DEE037A00E02FBC /* SettingsView.swift in Sources */,
+				E07A746B2DEE037A00E02FBC /* TimerInterval+Extensions.swift in Sources */,
+				E07A746C2DEE037A00E02FBC /* WorkSessionView.swift in Sources */,
+				E07A746D2DEE037A00E02FBC /* ReportPieChartView.swift in Sources */,
+				E07A746E2DEE037A00E02FBC /* SettingViewModel.swift in Sources */,
+				E07A746F2DEE037A00E02FBC /* ReportCache.swift in Sources */,
+				E07A74702DEE037A00E02FBC /* DevEnvironment.swift in Sources */,
+				E07A74712DEE037A00E02FBC /* TaskRowView.swift in Sources */,
+				E07A74722DEE037A00E02FBC /* TaskCompletionOverlayService.swift in Sources */,
+				E07A74732DEE037A00E02FBC /* TaskEditView.swift in Sources */,
+				E07A74742DEE037A00E02FBC /* AppEvents.swift in Sources */,
+				E07A74752DEE037A00E02FBC /* DoneListView.swift in Sources */,
+				E07A74762DEE037A00E02FBC /* TaskListView.swift in Sources */,
+				E07A74772DEE037A00E02FBC /* TaskListViewModel.swift in Sources */,
+				E07A74782DEE037A00E02FBC /* ToDoListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,7 +787,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Done Pomodoro/Preview Content\"";
-				DEVELOPMENT_TEAM = HWB25859R2;
+				DEVELOPMENT_TEAM = J7A46SWX9W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -677,7 +817,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Done Pomodoro/Preview Content\"";
-				DEVELOPMENT_TEAM = HWB25859R2;
+				DEVELOPMENT_TEAM = J7A46SWX9W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -771,6 +911,66 @@
 			};
 			name = Release;
 		};
+		E07A747D2DEE037A00E02FBC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Done Pomodoro/Preview Content\"";
+				DEVELOPMENT_TEAM = J7A46SWX9W;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.eliabsisay.Done-Pomodoro";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E07A747E2DEE037A00E02FBC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Done Pomodoro/Preview Content\"";
+				DEVELOPMENT_TEAM = J7A46SWX9W;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.eliabsisay.Done-Pomodoro";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -806,6 +1006,15 @@
 			buildConfigurations = (
 				E00455A82D9B931200042024 /* Debug */,
 				E00455A92D9B931200042024 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E07A747C2DEE037A00E02FBC /* Build configuration list for PBXNativeTarget "Done Pomodoro copy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E07A747D2DEE037A00E02FBC /* Debug */,
+				E07A747E2DEE037A00E02FBC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

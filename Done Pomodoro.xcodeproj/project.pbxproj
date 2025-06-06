@@ -16,7 +16,7 @@
 		E00455FE2D9F1A6500042024 /* DataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455FD2D9F1A6500042024 /* DataSeeder.swift */; };
 		E00456002D9F41FD00042024 /* TimerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455FF2D9F41FD00042024 /* TimerService.swift */; };
 		E00456022D9F452F00042024 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456012D9F452F00042024 /* NotificationService.swift */; };
-               E00456042D9F4E1E00042024 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456032D9F4E1E00042024 /* SettingsService.swift */; };
+		E00456042D9F4E1E00042024 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456032D9F4E1E00042024 /* SettingsService.swift */; };
 		E004562E2DA88FB700042024 /* WorkSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004562D2DA88FB700042024 /* WorkSessionViewModel.swift */; };
 		E00456302DA8945900042024 /* WorkSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004562F2DA8945900042024 /* WorkSessionView.swift */; };
 		E00456322DA896FC00042024 /* TimerInterval+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456312DA896FC00042024 /* TimerInterval+Extensions.swift */; };
@@ -65,7 +65,7 @@
 		E07A74652DEE037A00E02FBC /* ReportBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457302DBC235800042024 /* ReportBarChartView.swift */; };
 		E07A74662DEE037A00E02FBC /* SessionRestorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456372DB46AD300042024 /* SessionRestorer.swift */; };
 		E07A74672DEE037A00E02FBC /* TaskCompletedOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00457922DC5844000042024 /* TaskCompletedOverlayView.swift */; };
-		E07A74682DEE037A00E02FBC /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456032D9F4E1E00042024 /* SettingService.swift */; };
+		E07A74682DEE037A00E02FBC /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456032D9F4E1E00042024 /* SettingsService.swift */; };
 		E07A74692DEE037A00E02FBC /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00455EC2D9CF34600042024 /* Color+Extensions.swift */; };
 		E07A746A2DEE037A00E02FBC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456D42DBB29D800042024 /* SettingsView.swift */; };
 		E07A746B2DEE037A00E02FBC /* TimerInterval+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456312DA896FC00042024 /* TimerInterval+Extensions.swift */; };
@@ -83,6 +83,10 @@
 		E07A74772DEE037A00E02FBC /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00456992DBAF54700042024 /* TaskListViewModel.swift */; };
 		E07A74782DEE037A00E02FBC /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E004569B2DBAF54700042024 /* ToDoListView.swift */; };
 		E07A747B2DEE037A00E02FBC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E00455F02D9CF63000042024 /* Localizable.strings */; };
+		E07A74CA2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07A74C92DF3569300E02FBC /* UIApplication+Extensions.swift */; };
+		E07A74CB2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07A74C92DF3569300E02FBC /* UIApplication+Extensions.swift */; };
+		E07A74CC2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07A74C92DF3569300E02FBC /* UIApplication+Extensions.swift */; };
+		E07A74CD2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07A74C92DF3569300E02FBC /* UIApplication+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,7 +120,7 @@
 		E00455FD2D9F1A6500042024 /* DataSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSeeder.swift; sourceTree = "<group>"; };
 		E00455FF2D9F41FD00042024 /* TimerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerService.swift; sourceTree = "<group>"; };
 		E00456012D9F452F00042024 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-               E00456032D9F4E1E00042024 /* SettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
+		E00456032D9F4E1E00042024 /* SettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
 		E004562D2DA88FB700042024 /* WorkSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSessionViewModel.swift; sourceTree = "<group>"; };
 		E004562F2DA8945900042024 /* WorkSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSessionView.swift; sourceTree = "<group>"; };
 		E00456312DA896FC00042024 /* TimerInterval+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerInterval+Extensions.swift"; sourceTree = "<group>"; };
@@ -146,6 +150,7 @@
 		E00457902DC583EC00042024 /* TaskCompletionOverlayService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletionOverlayService.swift; sourceTree = "<group>"; };
 		E00457922DC5844000042024 /* TaskCompletedOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletedOverlayView.swift; sourceTree = "<group>"; };
 		E07A747F2DEE037A00E02FBC /* Done Pomodoro copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Done Pomodoro copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E07A74C92DF3569300E02FBC /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -247,7 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				E00455FF2D9F41FD00042024 /* TimerService.swift */,
-                               E00456032D9F4E1E00042024 /* SettingsService.swift */,
+				E00456032D9F4E1E00042024 /* SettingsService.swift */,
 				E00456352DB4685C00042024 /* SessionManager.swift */,
 				E00456372DB46AD300042024 /* SessionRestorer.swift */,
 				E004573A2DBDBB4F00042024 /* AppEvents.swift */,
@@ -263,6 +268,7 @@
 				E00455EE2D9CF48900042024 /* Font+Extensions.swift */,
 				E00455F02D9CF63000042024 /* Localizable.strings */,
 				E00456312DA896FC00042024 /* TimerInterval+Extensions.swift */,
+				E07A74C92DF3569300E02FBC /* UIApplication+Extensions.swift */,
 				E00456332DB44C1300042024 /* DevEnvironment.swift */,
 			);
 			path = Common;
@@ -547,13 +553,14 @@
 				E004572F2DBC224000042024 /* ReportsViewModel.swift in Sources */,
 				E00457352DBC264400042024 /* ReportsView.swift in Sources */,
 				E00456002D9F41FD00042024 /* TimerService.swift in Sources */,
+				E07A74CB2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */,
 				E00455EF2D9CF48900042024 /* Font+Extensions.swift in Sources */,
 				E00457372DBC269A00042024 /* ReportSettingsView.swift in Sources */,
 				E00456D12DBB17C300042024 /* HowItWorksView.swift in Sources */,
 				E00457312DBC235800042024 /* ReportBarChartView.swift in Sources */,
 				E00456382DB46AD300042024 /* SessionRestorer.swift in Sources */,
 				E00457932DC5844000042024 /* TaskCompletedOverlayView.swift in Sources */,
-                               E00456042D9F4E1E00042024 /* SettingsService.swift in Sources */,
+				E00456042D9F4E1E00042024 /* SettingsService.swift in Sources */,
 				E00455ED2D9CF34600042024 /* Color+Extensions.swift in Sources */,
 				E00456D52DBB29D800042024 /* SettingsView.swift in Sources */,
 				E00456322DA896FC00042024 /* TimerInterval+Extensions.swift in Sources */,
@@ -577,6 +584,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E07A74CC2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,6 +592,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E07A74CA2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +602,7 @@
 			files = (
 				E07A74542DEE037A00E02FBC /* WorkSessionViewModel.swift in Sources */,
 				E07A74552DEE037A00E02FBC /* Constants.swift in Sources */,
+				E07A74CD2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */,
 				E07A74562DEE037A00E02FBC /* MainTabView.swift in Sources */,
 				E07A74572DEE037A00E02FBC /* AboutView.swift in Sources */,
 				E07A74582DEE037A00E02FBC /* SessionManager.swift in Sources */,
@@ -611,7 +621,7 @@
 				E07A74652DEE037A00E02FBC /* ReportBarChartView.swift in Sources */,
 				E07A74662DEE037A00E02FBC /* SessionRestorer.swift in Sources */,
 				E07A74672DEE037A00E02FBC /* TaskCompletedOverlayView.swift in Sources */,
-				E07A74682DEE037A00E02FBC /* SettingService.swift in Sources */,
+				E07A74682DEE037A00E02FBC /* SettingsService.swift in Sources */,
 				E07A74692DEE037A00E02FBC /* Color+Extensions.swift in Sources */,
 				E07A746A2DEE037A00E02FBC /* SettingsView.swift in Sources */,
 				E07A746B2DEE037A00E02FBC /* TimerInterval+Extensions.swift in Sources */,

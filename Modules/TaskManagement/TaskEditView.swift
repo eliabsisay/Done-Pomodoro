@@ -25,6 +25,47 @@ enum TaskEditMode: Equatable {
     }
 }
 
+/// Settings that can be adjusted via the duration picker sheet
+private enum DurationSetting: Int, Identifiable, CaseIterable {
+    case work
+    case shortBreak
+    case longBreak
+    case longBreakAfter
+    case dailyGoal
+
+    var id: Int { rawValue }
+
+    /// Title shown in the list and sheet
+    var title: String {
+        switch self {
+        case .work: return "Work Time"
+        case .shortBreak: return "Short Break"
+        case .longBreak: return "Long Break"
+        case .longBreakAfter: return "Long Break After"
+        case .dailyGoal: return "Daily Goal"
+        }
+    }
+
+    /// Range of allowed values
+    var range: ClosedRange<Int> {
+        switch self {
+        case .work: return 1...60
+        case .shortBreak: return 1...30
+        case .longBreak: return 5...60
+        case .longBreakAfter: return 2...8
+        case .dailyGoal: return 1...20
+        }
+    }
+
+    /// Unit shown beside each value
+    var unit: String {
+        switch self {
+        case .work, .shortBreak, .longBreak: return "minutes"
+        case .longBreakAfter, .dailyGoal: return "sessions"
+        }
+    }
+}
+
 struct TaskEditView: View {
     // Environment access for dismissing the sheet
     @Environment(\.dismiss) private var dismiss
@@ -43,6 +84,9 @@ struct TaskEditView: View {
     @State private var longBreakDuration: Double = 15
     @State private var longBreakAfter: Double = 4
     @State private var dailyGoal: Double = 8
+
+    // Track which duration is currently being edited
+    @State private var editingDuration: DurationSetting?
     @State private var startBreaksAutomatically: Bool = false
     @State private var startWorkSessionsAutomatically: Bool = false
 
@@ -94,48 +138,15 @@ struct TaskEditView: View {
                 
                 // Durations section
                 Section(header: Text("Durations")) {
-                    HStack {
-                        Text("Work Time")
-                        Spacer()
-                        Text("\(Int(workDuration)) minutes")
-                            .foregroundColor(.gray)
-                    }
-                    Slider(value: $workDuration, in: 1...60, step: 1)
-                    
-                    HStack {
-                        Text("Short Break")
-                        Spacer()
-                        Text("\(Int(shortBreakDuration)) minutes")
-                            .foregroundColor(.gray)
-                    }
-                    Slider(value: $shortBreakDuration, in: 1...30, step: 1)
-                    
-                    HStack {
-                        Text("Long Break")
-                        Spacer()
-                        Text("\(Int(longBreakDuration)) minutes")
-                            .foregroundColor(.gray)
-                    }
-                    Slider(value: $longBreakDuration, in: 5...60, step: 1)
+                    durationButton(.work, value: Int(workDuration))
+                    durationButton(.shortBreak, value: Int(shortBreakDuration))
+                    durationButton(.longBreak, value: Int(longBreakDuration))
                 }
                 
                 // Pomodoro settings section
                 Section(header: Text("Pomodoro Settings")) {
-                    HStack {
-                        Text("Long Break After")
-                        Spacer()
-                        Text("\(Int(longBreakAfter)) sessions")
-                            .foregroundColor(.gray)
-                    }
-                    Slider(value: $longBreakAfter, in: 2...8, step: 1)
-                    
-                    HStack {
-                        Text("Daily Goal")
-                        Spacer()
-                        Text("\(Int(dailyGoal)) sessions")
-                            .foregroundColor(.gray)
-                    }
-                    Slider(value: $dailyGoal, in: 1...20, step: 1)
+                    durationButton(.longBreakAfter, value: Int(longBreakAfter))
+                    durationButton(.dailyGoal, value: Int(dailyGoal))
                 }
                 
                 // Automation section
@@ -168,6 +179,9 @@ struct TaskEditView: View {
                 if case .edit(let task) = mode {
                     loadTaskData(task)
                 }
+            }
+            .sheet(item: $editingDuration) { setting in
+                DurationPickerView(setting: setting, value: binding(for: setting))
             }
         }
     }
@@ -228,6 +242,53 @@ struct TaskEditView: View {
         // Call the save callback
         onSave(task)
     }
+
+    /// Button builder for each duration row
+    @ViewBuilder
+    private func durationButton(_ setting: DurationSetting, value: Int) -> some View {
+        Button(action: {
+            editingDuration = setting
+        }) {
+            HStack {
+                Text(setting.title)
+                Spacer()
+                Text("\(value) \(setting.unit)")
+                    .foregroundColor(.gray)
+            }
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+
+    /// Returns a binding to the correct duration value for the given setting
+    private func binding(for setting: DurationSetting) -> Binding<Int> {
+        switch setting {
+        case .work:
+            return Binding(
+                get: { Int(workDuration) },
+                set: { workDuration = Double($0) }
+            )
+        case .shortBreak:
+            return Binding(
+                get: { Int(shortBreakDuration) },
+                set: { shortBreakDuration = Double($0) }
+            )
+        case .longBreak:
+            return Binding(
+                get: { Int(longBreakDuration) },
+                set: { longBreakDuration = Double($0) }
+            )
+        case .longBreakAfter:
+            return Binding(
+                get: { Int(longBreakAfter) },
+                set: { longBreakAfter = Double($0) }
+            )
+        case .dailyGoal:
+            return Binding(
+                get: { Int(dailyGoal) },
+                set: { dailyGoal = Double($0) }
+            )
+        }
+    }
 }
 
 // Preview provider
@@ -235,7 +296,53 @@ struct TaskEditView_Previews: PreviewProvider {
     static var previews: some View {
         // Preview for new task
         TaskEditView(mode: .new, onSave: { _ in })
-        
+
         // Preview for edit task would need a mock Task
+    }
+}
+
+/// Sheet with a wheel picker for selecting a duration value
+private struct DurationPickerView: View {
+    @Environment(\.dismiss) private var dismiss
+
+    let setting: DurationSetting
+    @Binding var value: Int
+
+    @State private var tempValue: Int
+    private let initialValue: Int
+
+    init(setting: DurationSetting, value: Binding<Int>) {
+        self.setting = setting
+        self._value = value
+        self.initialValue = value.wrappedValue
+        _tempValue = State(initialValue: value.wrappedValue)
+    }
+
+    var body: some View {
+        NavigationView {
+            VStack {
+                Picker(setting.title, selection: $tempValue) {
+                    ForEach(Array(setting.range), id: \.self) { val in
+                        Text("\(val) \(setting.unit)").tag(val)
+                    }
+                }
+                .labelsHidden()
+                .pickerStyle(WheelPickerStyle())
+                .frame(maxWidth: .infinity)
+            }
+            .navigationTitle(setting.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                leading: Button("Cancel") {
+                    dismiss()
+                },
+                trailing: Button("Save") {
+                    value = tempValue
+                    dismiss()
+                }
+                .disabled(tempValue == initialValue)
+                .foregroundColor(tempValue == initialValue ? .gray : .blue)
+            )
+        }
     }
 }

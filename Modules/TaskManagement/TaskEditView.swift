@@ -25,47 +25,6 @@ enum TaskEditMode: Equatable {
     }
 }
 
-/// Settings that can be adjusted via the duration picker sheet
-private enum DurationSetting: Int, Identifiable, CaseIterable {
-    case work
-    case shortBreak
-    case longBreak
-    case longBreakAfter
-    case dailyGoal
-
-    var id: Int { rawValue }
-
-    /// Title shown in the list and sheet
-    var title: String {
-        switch self {
-        case .work: return "Work Time"
-        case .shortBreak: return "Short Break"
-        case .longBreak: return "Long Break"
-        case .longBreakAfter: return "Long Break After"
-        case .dailyGoal: return "Daily Goal"
-        }
-    }
-
-    /// Range of allowed values
-    var range: ClosedRange<Int> {
-        switch self {
-        case .work: return 1...60
-        case .shortBreak: return 1...30
-        case .longBreak: return 5...60
-        case .longBreakAfter: return 2...8
-        case .dailyGoal: return 1...20
-        }
-    }
-
-    /// Unit shown beside each value
-    var unit: String {
-        switch self {
-        case .work, .shortBreak, .longBreak: return "minutes"
-        case .longBreakAfter, .dailyGoal: return "sessions"
-        }
-    }
-}
-
 struct TaskEditView: View {
     // Environment access for dismissing the sheet
     @Environment(\.dismiss) private var dismiss
@@ -138,15 +97,48 @@ struct TaskEditView: View {
                 
                 // Durations section
                 Section(header: Text("Durations")) {
-                    durationButton(.work, value: Int(workDuration))
-                    durationButton(.shortBreak, value: Int(shortBreakDuration))
-                    durationButton(.longBreak, value: Int(longBreakDuration))
+                    DurationRow(
+                        title: "Work Time",
+                        value: Int(workDuration),
+                        unit: "minutes"
+                    ) {
+                        editingDuration = .work
+                    }
+                    
+                    DurationRow(
+                        title: "Short Break",
+                        value: Int(shortBreakDuration),
+                        unit: "minutes"
+                    ) {
+                        editingDuration = .shortBreak
+                    }
+                    
+                    DurationRow(
+                        title: "Long Break",
+                        value: Int(longBreakDuration),
+                        unit: "minutes"
+                    ) {
+                        editingDuration = .longBreak
+                    }
                 }
                 
                 // Pomodoro settings section
                 Section(header: Text("Pomodoro Settings")) {
-                    durationButton(.longBreakAfter, value: Int(longBreakAfter))
-                    durationButton(.dailyGoal, value: Int(dailyGoal))
+                    DurationRow(
+                        title: "Long Break After",
+                        value: Int(longBreakAfter),
+                        unit: "sessions"
+                    ) {
+                        editingDuration = .longBreakAfter
+                    }
+                    
+                    DurationRow(
+                        title: "Daily Goal",
+                        value: Int(dailyGoal),
+                        unit: "sessions"
+                    ) {
+                        editingDuration = .dailyGoal
+                    }
                 }
                 
                 // Automation section
@@ -165,6 +157,7 @@ struct TaskEditView: View {
                 }
             }
             .navigationTitle(mode == .new ? "New Task" : "Edit Task")
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading: Button("Cancel") {
                     dismiss()
@@ -243,22 +236,6 @@ struct TaskEditView: View {
         onSave(task)
     }
 
-    /// Button builder for each duration row
-    @ViewBuilder
-    private func durationButton(_ setting: DurationSetting, value: Int) -> some View {
-        Button(action: {
-            editingDuration = setting
-        }) {
-            HStack {
-                Text(setting.title)
-                Spacer()
-                Text("\(value) \(setting.unit)")
-                    .foregroundColor(.gray)
-            }
-        }
-        .buttonStyle(PlainButtonStyle())
-    }
-
     /// Returns a binding to the correct duration value for the given setting
     private func binding(for setting: DurationSetting) -> Binding<Int> {
         switch setting {
@@ -291,58 +268,11 @@ struct TaskEditView: View {
     }
 }
 
-// Preview provider
+// MARK: - Preview Provider
+
 struct TaskEditView_Previews: PreviewProvider {
     static var previews: some View {
         // Preview for new task
         TaskEditView(mode: .new, onSave: { _ in })
-
-        // Preview for edit task would need a mock Task
-    }
-}
-
-/// Sheet with a wheel picker for selecting a duration value
-private struct DurationPickerView: View {
-    @Environment(\.dismiss) private var dismiss
-
-    let setting: DurationSetting
-    @Binding var value: Int
-
-    @State private var tempValue: Int
-    private let initialValue: Int
-
-    init(setting: DurationSetting, value: Binding<Int>) {
-        self.setting = setting
-        self._value = value
-        self.initialValue = value.wrappedValue
-        _tempValue = State(initialValue: value.wrappedValue)
-    }
-
-    var body: some View {
-        NavigationView {
-            VStack {
-                Picker(setting.title, selection: $tempValue) {
-                    ForEach(Array(setting.range), id: \.self) { val in
-                        Text("\(val) \(setting.unit)").tag(val)
-                    }
-                }
-                .labelsHidden()
-                .pickerStyle(WheelPickerStyle())
-                .frame(maxWidth: .infinity)
-            }
-            .navigationTitle(setting.title)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading: Button("Cancel") {
-                    dismiss()
-                },
-                trailing: Button("Save") {
-                    value = tempValue
-                    dismiss()
-                }
-                .disabled(tempValue == initialValue)
-                .foregroundColor(tempValue == initialValue ? .gray : .blue)
-            )
-        }
     }
 }

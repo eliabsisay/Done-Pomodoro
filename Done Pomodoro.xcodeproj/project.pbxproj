@@ -87,6 +87,8 @@
 		E07A74CB2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07A74C92DF3569300E02FBC /* UIApplication+Extensions.swift */; };
 		E07A74CC2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07A74C92DF3569300E02FBC /* UIApplication+Extensions.swift */; };
 		E07A74CD2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07A74C92DF3569300E02FBC /* UIApplication+Extensions.swift */; };
+		E07A75752DF9037000E02FBC /* DurationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07A75742DF9037000E02FBC /* DurationPickerView.swift */; };
+		E07A75762DF9037000E02FBC /* DurationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07A75742DF9037000E02FBC /* DurationPickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +153,7 @@
 		E00457922DC5844000042024 /* TaskCompletedOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletedOverlayView.swift; sourceTree = "<group>"; };
 		E07A747F2DEE037A00E02FBC /* Done Pomodoro copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Done Pomodoro copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E07A74C92DF3569300E02FBC /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
+		E07A75742DF9037000E02FBC /* DurationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationPickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -351,6 +354,7 @@
 			children = (
 				E00456962DBAF54700042024 /* DoneListView.swift */,
 				E00456972DBAF54700042024 /* TaskEditView.swift */,
+				E07A75742DF9037000E02FBC /* DurationPickerView.swift */,
 				E00456982DBAF54700042024 /* TaskListView.swift */,
 				E00456992DBAF54700042024 /* TaskListViewModel.swift */,
 				E004569A2DBAF54700042024 /* TaskRowView.swift */,
@@ -551,6 +555,7 @@
 				E00455FC2D9F169F00042024 /* WorkSessionRepository.swift in Sources */,
 				E00457652DC0420F00042024 /* TaskPickerView.swift in Sources */,
 				E004572F2DBC224000042024 /* ReportsViewModel.swift in Sources */,
+				E07A75752DF9037000E02FBC /* DurationPickerView.swift in Sources */,
 				E00457352DBC264400042024 /* ReportsView.swift in Sources */,
 				E00456002D9F41FD00042024 /* TimerService.swift in Sources */,
 				E07A74CB2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */,
@@ -600,6 +605,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E07A75762DF9037000E02FBC /* DurationPickerView.swift in Sources */,
 				E07A74542DEE037A00E02FBC /* WorkSessionViewModel.swift in Sources */,
 				E07A74552DEE037A00E02FBC /* Constants.swift in Sources */,
 				E07A74CD2DF3569300E02FBC /* UIApplication+Extensions.swift in Sources */,

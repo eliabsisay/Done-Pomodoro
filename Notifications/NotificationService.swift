@@ -53,12 +53,13 @@ final class NotificationService {
     func scheduleNotification(in seconds: TimeInterval,
                               title: String,
                               body: String,
-                              sound: UNNotificationSound = .default,
+                              sound: UNNotificationSound? = .default,
                               categoryIdentifier: String = "timerComplete") {
-        
+
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
+        // Leaving `sound` nil produces a silent banner (the "none" option).
         content.sound = sound
         content.categoryIdentifier = categoryIdentifier
         
@@ -76,24 +77,20 @@ final class NotificationService {
         }
     }
     
-    /// Returns a notification sound based on the provided sound name.
-    /// - Parameter name: The name of the sound to use
-    /// - Returns: A UNNotificationSound object
-    func getSoundFor(name: String) -> UNNotificationSound {
-        // Map the string setting to actual sound files
+    /// Returns the notification sound for a stored sound-setting name.
+    /// - Parameter name: The persisted sound setting (currently "default" or "none").
+    /// - Returns: `.default` for the system sound, or `nil` for a silent notification.
+    ///
+    /// Any unrecognized value (including legacy names like "ding"/"chime" stored
+    /// before custom sounds were removed) safely falls back to the default sound.
+    /// When custom sounds are bundled later, add their cases here and keep this in
+    /// sync with `SettingViewModel.availableSounds`.
+    func getSoundFor(name: String) -> UNNotificationSound? {
         switch name {
-        case "ding":
-            return UNNotificationSound.default
-        case "chime":
-            return UNNotificationSound(named: UNNotificationSoundName("chime.caf"))
-        case "bell":
-            return UNNotificationSound(named: UNNotificationSoundName("bell.caf"))
-        case "swoosh":
-            return UNNotificationSound(named: UNNotificationSoundName("swoosh.caf"))
-        case "completed":
-            return UNNotificationSound(named: UNNotificationSoundName("completed.caf"))
+        case "none":
+            return nil
         default:
-            return UNNotificationSound.default
+            return .default
         }
     }
     

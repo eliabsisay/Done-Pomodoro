@@ -26,8 +26,8 @@ final class SettingsService {
             Constants.UserDefaultsKeys.hasCompletedOnboarding: false,
             Constants.UserDefaultsKeys.hideStatusBar: false,
             Constants.UserDefaultsKeys.preventSleep: false,
-            Constants.UserDefaultsKeys.workCompletedSound: "ding",
-            Constants.UserDefaultsKeys.breakCompletedSound: "chime",
+            Constants.UserDefaultsKeys.workCompletedSound: "default",
+            Constants.UserDefaultsKeys.breakCompletedSound: "default",
             Constants.UserDefaultsKeys.pushNotificationsEnabled: true,
         ])
     }
@@ -58,12 +58,12 @@ final class SettingsService {
     }
     
     var workCompletedSound: String {
-        get { defaults.string(forKey: Constants.UserDefaultsKeys.workCompletedSound) ?? "ding" }
+        get { defaults.string(forKey: Constants.UserDefaultsKeys.workCompletedSound) ?? "default" }
         set { defaults.set(newValue, forKey: Constants.UserDefaultsKeys.workCompletedSound) }
     }
-    
+
     var breakCompletedSound: String {
-        get { defaults.string(forKey: Constants.UserDefaultsKeys.breakCompletedSound) ?? "chime" }
+        get { defaults.string(forKey: Constants.UserDefaultsKeys.breakCompletedSound) ?? "default" }
         set { defaults.set(newValue, forKey: Constants.UserDefaultsKeys.breakCompletedSound) }
     }
     

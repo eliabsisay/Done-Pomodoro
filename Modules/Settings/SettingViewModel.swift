@@ -68,19 +68,35 @@ final class SettingsViewModel: ObservableObject {
     private let settingsService = SettingsService.shared
     private let notificationService = NotificationService.shared
     
-    /// Available sound options for session completion
-    let availableSounds = ["ding", "chime", "bell", "marimba", "none"]
+    /// Single source of truth for the selectable sound options.
+    /// iOS local notifications only support the system default sound or a
+    /// bundled custom file; until custom sounds are bundled, we offer the
+    /// honest set: the default sound, or none (a silent banner).
+    /// Keep this in sync with `NotificationService.getSoundFor`.
+    static let supportedSounds = ["default", "none"]
+
+    /// Available sound options for session completion (drives the Settings pickers).
+    let availableSounds = SettingsViewModel.supportedSounds
     
     // MARK: - Init
     
     init() {
-        // Initialize published properties from stored settings
+        // Initialize published properties from stored settings.
+        // Legacy sound values (e.g. "ding"/"chime" from before custom sounds
+        // were removed) are coerced to "default" so the pickers show a valid
+        // selection instead of a blank.
         self.appearanceMode = settingsService.appearanceMode
         self.preventSleep = settingsService.preventSleep
-        self.workCompletedSound = settingsService.workCompletedSound
-        self.breakCompletedSound = settingsService.breakCompletedSound
+        self.workCompletedSound = SettingsViewModel.supportedSounds.contains(settingsService.workCompletedSound)
+            ? settingsService.workCompletedSound : "default"
+        self.breakCompletedSound = SettingsViewModel.supportedSounds.contains(settingsService.breakCompletedSound)
+            ? settingsService.breakCompletedSound : "default"
         self.pushNotificationsEnabled = settingsService.pushNotificationsEnabled
-        
+
+        // Persist any coercion above so the stored value matches what's shown.
+        settingsService.workCompletedSound = workCompletedSound
+        settingsService.breakCompletedSound = breakCompletedSound
+
         print("📱 Settings loaded:")
         print("- Appearance Mode: \(appearanceMode.rawValue)")
         print("- Prevent Sleep: \(preventSleep)")

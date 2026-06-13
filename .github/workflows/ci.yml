@@ -1,0 +1,80 @@
+name: CI
+
+# Build the app and run the unit-test suite on every push to main and every PR.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel an in-progress run if a newer commit is pushed to the same ref.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: macos-15
+
+    env:
+      PROJECT: "Done Pomodoro.xcodeproj"
+      SCHEME: "Done Pomodoro"
+      # Unit tests only — the UITests target is unimplemented boilerplate.
+      TEST_TARGET: "Done PomodoroTests"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show selected Xcode
+        run: xcodebuild -version
+
+      # Pick a concrete iOS simulator at runtime so the workflow survives
+      # GitHub bumping the runner image (device names / OS versions drift).
+      # The project's deployment target is iOS 18.2, so any installed iPhone
+      # on the runner's bundled iOS 18+ runtime is valid.
+      - name: Select an iOS Simulator
+        run: |
+          set -euo pipefail
+          UDID=$(xcrun simctl list devices available --json \
+            | python3 -c "import json,sys;
+          data=json.load(sys.stdin)['devices'];
+          cands=[d for rt,ds in data.items() if 'iOS' in rt for d in ds if d['isAvailable'] and 'iPhone' in d['name']];
+          print(cands[-1]['udid'] if cands else '')")
+          if [ -z "$UDID" ]; then
+            echo "::error::No available iPhone simulator found on the runner"
+            xcrun simctl list devices available
+            exit 1
+          fi
+          echo "Selected simulator UDID: $UDID"
+          echo "SIMULATOR_UDID=$UDID" >> "$GITHUB_ENV"
+
+      - name: Build & Test
+        run: |
+          set -euo pipefail
+          run_tests() {
+            xcodebuild test \
+              -project "$PROJECT" \
+              -scheme "$SCHEME" \
+              -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
+              -only-testing:"$TEST_TARGET" \
+              -resultBundlePath TestResults.xcresult \
+              CODE_SIGNING_ALLOWED=NO
+          }
+          # Pretty-print with xcbeautify if it's on the runner; otherwise raw.
+          # Either way the real xcodebuild exit code (via pipefail) decides pass/fail.
+          if command -v xcbeautify >/dev/null 2>&1; then
+            set -o pipefail
+            run_tests | xcbeautify --renderer github-actions
+          else
+            run_tests
+          fi
+
+      - name: Upload test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults.xcresult
+          if-no-files-found: ignore

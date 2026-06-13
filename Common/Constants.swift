@@ -28,6 +28,8 @@ enum Constants {
         static let activeSessionType = "activeSessionType"
         static let lastSelectedTaskID = "lastSelectedTaskID"
         static let shouldRestoreSession = "shouldRestoreSession"
+        static let todoSortOption = "todoSortOption"
+        static let doneSortOption = "doneSortOption"
     }
    
     /// App-specific label strings for session types

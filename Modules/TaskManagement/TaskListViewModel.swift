@@ -44,9 +44,18 @@ final class TaskListViewModel: ObservableObject {
     @Published var showTaskCompletedOverlay: Bool = false
     @Published var lastCompletedTask: Task? = nil
     
-    /// Sorting options
-    @Published var todoSortOption: TodoSortOption = .creationDate
-    @Published var doneSortOption: DoneSortOption = .completionDate
+    /// Sorting options — persisted to UserDefaults so the user's choice
+    /// survives relaunch (matches the report-settings persistence pattern).
+    @Published var todoSortOption: TodoSortOption = .creationDate {
+        didSet {
+            UserDefaults.standard.set(todoSortOption.rawValue, forKey: Constants.UserDefaultsKeys.todoSortOption)
+        }
+    }
+    @Published var doneSortOption: DoneSortOption = .completionDate {
+        didSet {
+            UserDefaults.standard.set(doneSortOption.rawValue, forKey: Constants.UserDefaultsKeys.doneSortOption)
+        }
+    }
     
     /// Alert properties for custom AlertView
     @Published var showingAlertView = false
@@ -68,9 +77,12 @@ final class TaskListViewModel: ObservableObject {
     // MARK: - Initialization and Cleanup
     
     init() {
+        // Restore the user's saved sort selections before anything observes them
+        loadSortOptions()
+
         // Load tasks initially
         loadTasks()
-        
+
         // Set up observer for task selection events
         taskSelectedObserver = AppEvents.observe(AppEvents.taskSelected) { [weak self] _ in
             // Refresh the task list to update the indicators
@@ -89,6 +101,22 @@ final class TaskListViewModel: ObservableObject {
         }
     }
     
+    // MARK: - Sort Persistence
+
+    /// Restores the persisted sort selections from UserDefaults.
+    /// Falls back to the declared defaults when nothing valid is stored.
+    private func loadSortOptions() {
+        if let raw = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.todoSortOption),
+           let option = TodoSortOption(rawValue: raw) {
+            todoSortOption = option
+        }
+        if let raw = UserDefaults.standard.string(forKey: Constants.UserDefaultsKeys.doneSortOption),
+           let option = DoneSortOption(rawValue: raw) {
+            doneSortOption = option
+        }
+        print("🔃 Restored sort options — To-Do: \(todoSortOption.rawValue), Done: \(doneSortOption.rawValue)")
+    }
+
     // MARK: - Task Access
     
     /// Returns only the incomplete tasks, sorted according to the selected option

@@ -529,11 +529,7 @@ final class WorkSessionViewModel: ObservableObject {
     }
     
     var taskColor: Color {
-        guard let data = currentTask?.color,
-              let uiColor = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? UIColor else {
-            return Color.primaryColor
-        }
-        return Color(uiColor)
+        Color.fromTaskColorData(currentTask?.color)
     }
     
     var isStartable: Bool {

@@ -126,11 +126,7 @@ struct TaskPickerView: View {
     
     // Helper function to convert task color data to SwiftUI Color
     private func getTaskColor(_ task: Task) -> Color {
-        guard let data = task.color,
-              let uiColor = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? UIColor else {
-            return Color.primaryColor
-        }
-        return Color(uiColor)
+        Color.fromTaskColorData(task.color)
     }
 }
 

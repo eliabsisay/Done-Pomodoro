@@ -620,11 +620,7 @@ struct ReportBarEntry: Identifiable {
     
     /// Returns the color for chart display
     var displayColor: Color {
-        if let colorData = color,
-           let uiColor = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? UIColor {
-            return Color(uiColor)
-        }
-        return .primaryColor
+        Color.fromTaskColorData(color)
     }
 }
 
@@ -634,13 +630,9 @@ struct ReportPieEntry: Identifiable {
     let label: String
     let value: Double
     let color: Data?
-    
+
     /// Returns the color for chart display
     var displayColor: Color {
-        if let colorData = color,
-           let uiColor = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? UIColor {
-            return Color(uiColor)
-        }
-        return .primaryColor
+        Color.fromTaskColorData(color)
     }
 }

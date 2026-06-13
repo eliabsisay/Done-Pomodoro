@@ -186,8 +186,7 @@ struct TaskEditView: View {
         name = task.name ?? ""
         
         // Extract color from the stored data
-        if let colorData = task.color,
-           let uiColor = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? UIColor {
+        if let uiColor = UIColor.fromArchivedData(task.color) {
             selectedColor = Color(uiColor)
         }
         
@@ -202,9 +201,8 @@ struct TaskEditView: View {
     
     /// Saves the task data
     private func saveTask() {
-        // Convert Color to UIColor, then to Data for storage
-        let uiColor = UIColor(selectedColor)
-        let colorData = try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false)
+        // Convert the selected color to Data for storage
+        let colorData = selectedColor.taskColorData()
         
         // Create or update the task based on mode
         let task: Task

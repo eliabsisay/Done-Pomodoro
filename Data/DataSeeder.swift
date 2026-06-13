@@ -28,9 +28,8 @@ struct DataSeeder {
         let systemColors: [Color] = [.red, .blue, .green, .orange, .purple, .pink]
         let selectedColor = systemColors.randomElement() ?? .purple
         
-        // Convert Color to Data (via UIColor archive)
-        let uiColor = UIColor(selectedColor)
-        let colorData = try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false)
+        // Convert Color to Data for storage
+        let colorData = selectedColor.taskColorData()
         
         // Create a demo task using pre-defined default settings
         _ = taskRepo.createTask(

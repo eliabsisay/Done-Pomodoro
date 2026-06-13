@@ -13,11 +13,7 @@ struct TaskRowView: View {
     
     // For showing the dot indicator with the task's color
     private var taskColor: Color {
-        guard let data = task.color,
-              let uiColor = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? UIColor else {
-            return Color.primaryColor
-        }
-        return Color(uiColor)
+        Color.fromTaskColorData(task.color)
     }
     
     // Format the task's completion date (if available)

@@ -1,37 +1,41 @@
 # Visual Redesign - Next Session Prompt
-**Last updated:** 2026-06-14
+**Last updated:** 2026-06-14 (after PR1 build)
 
 ---
 
 ## Copy/paste this to start your next session:
 
-We're modernizing the visual design of "Done Pomodoro," a native SwiftUI iOS app (currently stock/default-component styling). The plan, all pre-steps, and Phase 0 (direction pick) are **done**. The next stage is **PR1 — design system foundation + Timer screen**.
+We're modernizing the visual design of "Done Pomodoro," a native SwiftUI iOS app. The plan, pre-steps, Phase 0 (direction pick), and **PR1 (design system + Timer)** are done and CI-green. We paused **mid on-device verification of PR1**.
 
-> **Before acting:** PR1 carries a gating decision — adopting true iOS 26 Liquid Glass means raising the minimum deployment target **18.2 → 26** (drops iOS 18–25 users) and needing an iOS 26 simulator in CI. Get my explicit go/no-go on that before writing PR1 code. Don't auto-execute.
+> **Before acting:** Pick up the on-device verification of PR1 (timer state matrix + light mode) and review with me whether to merge **PR #22**, or move on. Don't auto-execute.
 
-**Where we left off:** Completed the pre-steps and a two-round Phase 0 prototype-and-pick. **Chosen direction: "Calm Glass · Neutral + task-accent"** — a calm, restrained take on **Apple's iOS 26 Liquid Glass**: translucent glass surfaces + a **thin** gradient ring with a **gentle** glow, spacious layouts, **both light & dark first-class**, subtle depth. The winning palette is **near-neutral glass where each task's own color is the only accent** (drives ring / dots / highlights — maps onto the existing `taskColor` / `Color.fromTaskColorData`). **SF Rounded** type; serif rejected.
+**Where we left off:** PR1 is built, pushed, and **CI-green as PR #22** (branch `feature/redesign-pr1-design-system-timer`). I was verifying it on my **physical iPhone** (device signing is now set up — Apple ID added, dev cert created). Still to confirm before merging #22:
+- **Light mode** on device (the simulator wouldn't render the app in light — a trait quirk; I confirmed light works on device, just hadn't eyeballed the redesign in light yet).
+- The full **timer control-button state matrix**: running→Pause; paused·work → Resume / Complete Session / Complete Task / Cancel; paused·break → Resume / Skip Break; complete-task → success overlay → "pick a task"; task chip locked while running; "?" sheet. Behavior must match pre-redesign exactly (PR1 was restyle-only).
+
+**Chosen direction (locked):** **"Calm Glass · Neutral + task-accent"** — a calm, restrained take on **iOS 26 Liquid Glass**: translucent glass surfaces + a thin gradient ring with a gentle glow, spacious layouts, both modes equal, subtle depth. Near-neutral glass where **each task's own color is the accent** (`taskColor` / `Color.fromTaskColorData`). SF Rounded; no serif. Primary button = a **subtle** (0.32-opacity) task-color glass wash.
 
 **Context to read first:**
-- `docs/redesign-plan.md` — the full plan + a **"Status — 2026-06-14"** section and Decisions log (now on `main`). Read this first.
-- `CLAUDE.md` — agent brief: build/run, architecture map, gotchas (`Task` shadowing, `AppEvents`, verbose-comment style), conventions.
-- Branch **`spike/design-directions`** — throwaway Phase-0 prototypes (test target, mock data): `DDCalmGlass.swift` (the winning skeleton + 4 palettes), `DDMockData.swift`, `DDRenderTests.swift`, and the renders in `__DDRenders__/`. The winning look is the `.neutralAccent` variant.
-- `~/Downloads/Pomodoro_App_Project_Handoff.md` — product/PRD context (optional, deep background).
+- `docs/redesign-plan.md` — full plan + "Status — 2026-06-14" section + Decisions log. On `main`.
+- `CLAUDE.md` — agent brief. **Correction:** its "synchronized groups auto-add files" claim is only true for `Done Pomodoro/`, `Done PomodoroTests/`, `Done PomodoroUITests/`. `Common/`, `Modules/`, etc. are **regular groups** — new app-target files must go under `Done Pomodoro/...` (that's why the design system lives in `Done Pomodoro/DesignSystem/`, not `Common/DesignSystem/`).
+- PR1 code (on the `feature/redesign-pr1-design-system-timer` branch / PR #22):
+  - `Common/Constants.swift` — `Spacing` / `Radius` / `Elevation` / `Motion` tokens.
+  - `Common/Color+Extensions.swift` + `SurfaceBackground` colorset — `surfaceBackground` (auto-generated symbol; don't redeclare), `textPrimary/Secondary`.
+  - `Done Pomodoro/DesignSystem/{GlassSurfaces,DSButtonStyles,TimerRingView}.swift` — `.appBackground()`, `.glassCard()`, DS button styles, ring.
+  - `Modules/Timer/WorkSessionView.swift` — restyled timer (bindings + state machine preserved verbatim).
 
-**Key decisions already made:**
-- **Direction locked:** Calm Glass · Neutral + task-accent (see above). Graduate the `DDCalmGlass` neutral skeleton into a real `Common/DesignSystem/` + tokens, using native `glassEffect` instead of the prototype's approximated translucent fills.
-- **iOS 26 Liquid Glass adopted** → PR1 raises `IPHONEOS_DEPLOYMENT_TARGET` 18.2 → 26. Tradeoff: drops iOS 18–25. Confirm before building; verify CI has an iOS 26 sim.
-- **Method:** SwiftUI-first; iterate via SwiftUI Previews + light/dark screenshots. `ImageRenderer` can't render `ScrollView` or composite real glass — capture true Liquid Glass via the simulator.
-- **Rollout:** hero-first, one PR per stage — PR1 design system + Timer · PR2 Task list · PR3 Reports · PR4 secondary screens. Tokens namespaced under `Constants` (`Constants.Spacing/Elevation/Motion`); colors in `Color+Extensions`. App icon out of scope.
-- **CI design-lint shipped** (`scripts/design-lint.sh`, PR #19) — flags hardcoded styling values in `Modules/` against a baseline. **Advisory now; flip to blocking at PR2.** Per-screen "Definition of Done" checklist still deferred.
-- **Workflow:** every change is a branch → PR → CI-green → merge. Direct push to `main` is blocked (CI gates each change). Git identity + the Xcode MCP (`xcrun mcpbridge`, requires Xcode running) configured; start sessions from the repo dir. Config dir is `~/.claude-personal`.
-- **Repo:** `/Users/eliabsisay/Library/CloudStorage/OneDrive-Personal/Done - Pomodoro App/Done-Pomodoro`. `main` has the redesign pre-steps merged (#18 stray-target removal, #19 design-lint) + the plan doc (#20). **57 unit tests green**; they cover logic only — they do NOT catch view regressions.
+**Key state / decisions already made:**
+- **Minimum is now iOS 26** (raised from 18.2, PR #21) for true Liquid Glass `glassEffect`. Dropped iOS 18–25. CI selects newest Xcode + an iOS-26 sim (works on GitHub `macos-15`).
+- **CI design-lint** (`scripts/design-lint.sh`) is **advisory now → FLIP TO BLOCKING at PR2** (set `DESIGN_LINT_BLOCKING: "true"` in `.github/workflows/ci.yml`). Baseline is content-keyed; refresh it (`--update-baseline`) as each screen is cleaned (currently **23** entries, down from 28 after the Timer).
+- **Tooling gotchas:** `ImageRenderer` cannot render Liquid Glass (errors out) or `ScrollView` — capture real glass via the **simulator** (`xcrun simctl io booted screenshot`). The sim wouldn't show the app in light mode (trait quirk); light works on device.
+- Throwaway Phase-0 prototypes on `spike/design-directions` (`DDCalmGlass.swift`, winning variant `.neutralAccent`); screenshot-loop spike on `spike/screenshot-loop`.
+- Workflow: branch → PR → CI-green → merge; direct push to `main` is blocked. Start sessions from the repo dir; Xcode MCP needs Xcode running.
 
 **Possible next steps (review with me before starting):**
-1. **Confirm the iOS 26 / deployment-target raise** (gates everything below).
-2. **PR1 — Design system foundation:** port the Calm Glass neutral skeleton into `Common/DesignSystem/` (glass card modifier, button styles, `TimerRingView`) + tokens (`Constants.Spacing/Elevation/Motion`, semantic colors), using native `glassEffect`.
-3. **PR1 — Timer screen:** redesign `WorkSessionView` on the new system, preserving every `viewModel` binding and the control-button state machine verbatim.
-4. Verify on the iOS 26 simulator (light + dark, Dynamic Type, the full timer state matrix) before opening the PR.
+1. Finish **on-device verification of PR1** and **merge #22**.
+2. **PR2 — Task management:** redesign `TaskListView` / `TaskRowView` / `ToDoListView` / `DoneListView` onto the system (custom glass row cells with color dot + active-timer indicator + durations, the To-Do/Done segmented control, the Add button, swipe actions, empty states). **Harden the provisional Phase-1 tokens against this dense layout and lock the system here.** Preserve all `TaskListViewModel` bindings (incl. sort persistence and `taskColor` decode). **Flip design-lint to blocking.**
+3. Then PR3 (Reports), PR4 (secondary screens + tab bar — still default-styled).
 
-**Open questions / what the PM needs to bring:**
-- Final go/no-go on dropping iOS 18–25 (the deployment-target raise for true Liquid Glass).
-- Whether to keep `glassEffect` everywhere or reserve it for hero surfaces (perf on the dense task list, checked in PR2).
+**Open questions:**
+- Any tweaks to the Timer from the on-device pass (glass contrast, ring weight, button feel) before PR2.
+- The app's tab bar is still stock — confirm it's in scope for PR4 (it is, per the plan).

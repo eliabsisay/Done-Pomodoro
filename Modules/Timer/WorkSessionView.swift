@@ -4,26 +4,33 @@
 //
 //  Created by Eliab Sisay on 4/10/25.
 //
-
+//  Visual redesign (PR1): restyled onto the "Calm Glass · Neutral + task-accent"
+//  design system — neutral surface, a glass task chip, the reusable
+//  `TimerRingView` (thin gradient ring + gentle glow from the task color), and
+//  the DS Liquid Glass button styles. RESTYLE ONLY: every `viewModel` binding
+//  and the full control-button state machine below are preserved verbatim from
+//  the original (running / startable / paused·work / paused·break / paused·no-task).
+//  Do not alter the actions or conditions here — they are CI-invisible.
+//
 
 import SwiftUI
 
 struct WorkSessionView: View {
-    
+
     // ViewModel drives all timer logic
     @StateObject private var viewModel: WorkSessionViewModel
-    
+
     @ObservedObject private var overlayService = TaskCompletionOverlayService.shared
-    
+
     // Allows injecting a custom viewModel preview/testing
     init(viewModel: @autoclosure @escaping () -> WorkSessionViewModel = WorkSessionViewModel()) {
         _viewModel = StateObject(wrappedValue: viewModel())
     }
-    
+
     var body: some View {
         ZStack {
-            VStack(spacing: 32) {
-                // Task name with selector
+            VStack(spacing: Constants.Spacing.xxl) {
+                // Task name with selector (glass chip)
                 Button(action: {
                     //If no incomplete tasks show task createion view
                     if viewModel.hasNoIncompleteTasks {
@@ -34,79 +41,80 @@ struct WorkSessionView: View {
                         viewModel.showingTaskPicker = true
                     }
                 }) {
-                    HStack {
+                    HStack(spacing: Constants.Spacing.sm) {
                         if let task = viewModel.currentTask {
                             Text(task.name ?? "Unnamed Task")
-                                .font(.headingL)
-                                .foregroundStyle(Color.textColor)
+                                .font(.system(.title2, design: .rounded).weight(.semibold))
+                                .foregroundStyle(Color.textPrimary)
+                            Image(systemName: "chevron.down")
+                                .font(.caption.weight(.semibold))
+                                .foregroundStyle(Color.textSecondary)
                         } else {
                             if viewModel.hasNoIncompleteTasks {
                                 Text("Create a Task")
-                                    .font(.headingL)
-                                    .foregroundStyle(.blue)
+                                    .font(.system(.title2, design: .rounded).weight(.semibold))
+                                    .foregroundStyle(Color.textPrimary)
                                 Image(systemName: "plus")
-                                    .font(.caption)
-                                    .foregroundStyle(.blue)
-                                
+                                    .font(.caption.weight(.semibold))
+                                    .foregroundStyle(Color.textSecondary)
+
                             } else {
                                 Text("Select a Task")
-                                    .font(.headingL)
-                                    .foregroundStyle(.gray)
+                                    .font(.system(.title2, design: .rounded).weight(.semibold))
+                                    .foregroundStyle(Color.textSecondary)
                                 Image(systemName: "chevron.down")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                
+                                    .font(.caption.weight(.semibold))
+                                    .foregroundStyle(Color.textSecondary)
+
                             }
                         }
-                        
+
                     }
+                    .padding(.horizontal, Constants.Spacing.lg)
+                    .padding(.vertical, Constants.Spacing.md)
+                    .glassCard(cornerRadius: Constants.Radius.lg)
                 }
                 .disabled(viewModel.isRunning) // Prevent changing tasks during active session
-                
-                // Timer countdown
+
+                // Timer countdown — redesigned ring component + neutral countdown
                 ZStack {
-                    // Background ring — full light circle
-                    Circle()
-                        .stroke(viewModel.taskColor.opacity(0.2), lineWidth: 12)
-                    
-                    // Foreground ring — animates down
-                    Circle()
-                        .trim(from: 0, to: 1 - viewModel.progress)
-                        .stroke(viewModel.taskColor, style: StrokeStyle(lineWidth: 12, lineCap: .round))
-                        .rotationEffect(.degrees(-90))
-                        .animation(.easeInOut(duration: 0.5), value: viewModel.progress)
-                    
-                    // Countdown
-                    Text(viewModel.timeRemaining.formattedAsTimer)
-                        .font(.system(size: 64, weight: .bold, design: .rounded))
-                        .monospacedDigit()
-                        .foregroundStyle(Color.primaryColor)
+                    TimerRingView(progress: viewModel.progress, color: viewModel.taskColor)
+
+                    VStack(spacing: Constants.Spacing.xxs) {
+                        Text(viewModel.timeRemaining.formattedAsTimer)
+                            .font(.system(size: 64, weight: .medium, design: .rounded))
+                            .monospacedDigit()
+                            .foregroundStyle(Color.textPrimary)
+                        Text("remaining")
+                            .font(.system(.footnote, design: .rounded))
+                            .foregroundStyle(Color.textSecondary)
+                    }
                 }
-                .frame(width: 200, height: 200)
-                .padding()
-                
+                .frame(width: 250, height: 250)
+                .padding(Constants.Spacing.sm)
+
                 // Session type label
                 Text(viewModel.sessionTypeLabel)
-                    .font(.bodyMedium)
-                    .foregroundStyle(.secondary)
-                
-                // Control buttons
-                HStack(spacing: 24) {
+                    .font(.system(.subheadline, design: .rounded).weight(.medium))
+                    .foregroundStyle(Color.textSecondary)
+
+                // Control buttons — STATE MACHINE PRESERVED VERBATIM (restyle only)
+                VStack(spacing: Constants.Spacing.md) {
                     if viewModel.isRunning {
                         // Timer is actively counting down
                         Button("Pause") {
                             viewModel.pause()
                         }
-                        .buttonStyle(.borderedProminent)
-                        
+                        .buttonStyle(.dsPrimary(tint: viewModel.taskColor))
+
                     } else if viewModel.isStartable {
                         // Timer hasn't started yet — show Start button
                         Button("Start") {
                             guard let task = viewModel.currentTask else { return }
-                            
+
                             // Use the correct sessionType and matching duration from ViewModel
                             let duration: TimeInterval
-                            
+
                             switch viewModel.sessionType {
                             case .work:
                                 duration = TimeInterval(task.workDuration * 60)
@@ -115,68 +123,60 @@ struct WorkSessionView: View {
                             case .longBreak:
                                 duration = TimeInterval(task.longBreakDuration * 60)
                             }
-                            
+
                             viewModel.startSession(for: task, type: viewModel.sessionType, duration: duration)
                         }
-                        .buttonStyle(.borderedProminent)
+                        .buttonStyle(.dsPrimary(tint: viewModel.taskColor))
                         .disabled(viewModel.currentTask == nil) // Disable if no task selected
-                        
+
                     } else {
                         // Paused state UI
                         if viewModel.currentTask == nil {
                             // --- After completing a task: show only a disabled Start button ---
                             Button("Start") { }
-                                .buttonStyle(.borderedProminent)
-                                .frame(maxWidth: .infinity, minHeight: 44)
+                                .buttonStyle(.dsPrimary(tint: viewModel.taskColor))
                             // Always disabled until they actually pick a task
                                 .disabled(!viewModel.isStartable)
                         } else {
                             // --- Normal "paused" menu (no task‐complete yet) ---
-                            VStack(spacing: 16) {
+                            VStack(spacing: Constants.Spacing.md) {
                                 // First row - Resume (common for all session types)
                                 Button("Resume") {
                                     viewModel.resume()
                                 }
-                                .buttonStyle(.bordered)
-                                .frame(maxWidth: .infinity)
-                                
+                                .buttonStyle(.dsPrimary(tint: viewModel.taskColor))
+
                                 // Second row - options based on session type
                                 if viewModel.sessionType == .work {
                                     // For work sessions: Complete Session, Complete Task, Cancel
-                                    HStack(spacing: 12) {
-                                        Button("Complete Session") {
-                                            viewModel.completeWorkSession()
-                                        }
-                                        .buttonStyle(.borderedProminent)
-                                        .tint(.blue)
-                                        
-                                        Button("Complete Task") {
-                                            viewModel.completeTask()
-                                        }
-                                        .buttonStyle(.borderedProminent)
-                                        .tint(.green)
-                                        
-                                        Button("Cancel") {
-                                            viewModel.cancel()
-                                        }
-                                        .buttonStyle(.bordered)
-                                        .tint(.red)
+                                    Button("Complete Session") {
+                                        viewModel.completeWorkSession()
                                     }
+                                    .buttonStyle(.dsSecondary)
+
+                                    Button("Complete Task") {
+                                        viewModel.completeTask()
+                                    }
+                                    .buttonStyle(.dsSecondary)
+
+                                    Button("Cancel") {
+                                        viewModel.cancel()
+                                    }
+                                    .buttonStyle(.dsDestructive)
                                 } else {
                                     // For break sessions: Just Skip Break (Resume is already handled above)
                                     Button("Skip Break") {
                                         viewModel.completeWorkSession()
                                     }
-                                    .buttonStyle(.borderedProminent)
-                                    .tint(.blue)
-                                    .frame(maxWidth: .infinity)
+                                    .buttonStyle(.dsSecondary)
                                 }
                             }
                         }
                     }
                 }
             }
-            .padding()
+            .padding(Constants.Spacing.xl)
+            .appBackground(accent: viewModel.taskColor)
             .sheet(isPresented: $viewModel.showingHowItWorksSheet) {
                 HowItWorksView()
             }
@@ -188,7 +188,7 @@ struct WorkSessionView: View {
                     // When a task is saved, select it and close the sheet
                     viewModel.selectTask(newTask)
                     viewModel.showingTaskCreationSheet = false
-                    
+
                     // Reload available tasks to ensure UI is updated
                     viewModel.loadAvailableTasks()
                 })
@@ -204,17 +204,17 @@ struct WorkSessionView: View {
                     }) {
                         Image(systemName: "questionmark.circle")
                             .font(.title3)
-                            .foregroundColor(.primaryColor)
+                            .foregroundStyle(Color.textSecondary)
                     }
                 }
             }
-            
+
             // Success overlay
             if overlayService.showTaskCompletedOverlay {
                 TaskCompletedOverlayView()
             }
         }
-        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: overlayService.showTaskCompletedOverlay)
+        .animation(Constants.Motion.overlay, value: overlayService.showTaskCompletedOverlay)
     }
 }
 
@@ -222,7 +222,7 @@ struct WorkSessionView_Previews: PreviewProvider {
     static var previews: some View {
         let taskRepo = TaskRepository()
         let vm = WorkSessionViewModel()
-        
+
         return WorkSessionView(viewModel: vm)
             .onAppear {
                 if let task = taskRepo.getAllTasks().first {

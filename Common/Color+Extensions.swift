@@ -18,6 +18,26 @@ extension Color {
     static let textColor = Color("TextColor")
 }
 
+// MARK: - Design-system semantic roles (visual redesign, 2026)
+
+/// Semantic color roles for the "Calm Glass · Neutral + task-accent" direction.
+/// The aesthetic is deliberately near-neutral: surfaces are a calm grey base
+/// (with Liquid Glass floating above), text uses the system hierarchy, and the
+/// ONLY chromatic accent comes from each task's own color (`taskColor` /
+/// `Color.fromTaskColorData`). Keep accents data-driven — don't hardcode a
+/// brand hue into the redesigned surfaces.
+extension Color {
+    // Calm neutral base that glass surfaces float over: use `Color.surfaceBackground`,
+    // auto-generated from the `SurfaceBackground` colorset (light + dark). Not
+    // re-declared here — Xcode's asset-symbol generation already provides it, and
+    // a manual copy collides (the lesson behind the namespaced asset names).
+
+    /// Primary / secondary text — the system hierarchy reads as neutral and
+    /// adapts to both modes, which is exactly what this direction wants.
+    static let textPrimary = Color.primary
+    static let textSecondary = Color.secondary
+}
+
 // MARK: - Task Color Archiving
 
 /// Task colors are stored in Core Data as an archived `UIColor` (Binary Data).

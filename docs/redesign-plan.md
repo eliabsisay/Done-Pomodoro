@@ -13,6 +13,17 @@ The app works but looks "old-school" — it was built with default SwiftUI compo
 
 The 57-test suite covers **logic only** (timer/rounding/restore/sounds/colors) and executes **no view code** — it does not catch view regressions. View correctness is verified by the manual test matrix + screenshots below, in both light and dark mode.
 
+## Status — 2026-06-14
+
+**Pre-steps + Phase 0 are complete; the aesthetic is now chosen (no longer TBD).**
+
+- ✅ **Pre-step 2** — stray `Done Pomodoro copy` target removed (PR #18).
+- ✅ **Pre-step 1** — render→screenshot loop validated (`ImageRenderer`, light + dark, asset colors flip correctly). Throwaway spike on `spike/screenshot-loop`.
+- ✅ **CI design-lint shipped** (PR #19) — zero-dependency grep guard (`scripts/design-lint.sh`) against hardcoded styling values in `Modules/`, with a content-keyed baseline. **Advisory now, flips to blocking at PR2.** Resolves Decisions-log #9.
+- ✅ **Phase 0 direction chosen: "Calm Glass · Neutral + task-accent."** A calm, restrained take on **Apple's iOS 26 Liquid Glass** — translucent glass surfaces + a **thin** gradient ring with a **gentle** glow, spacious layouts, **both light & dark first-class**, subtle depth (glass/elevation as accents, not maximal). The winning palette is **near-neutral glass where each task's own color is the only accent** (drives ring / dots / highlights — maps onto the existing `taskColor` / `Color.fromTaskColorData`). **SF Rounded** typography; serif rejected. Chosen via a two-round prototype-and-pick (round 1: Quiet Focus / Momentum / Glass Deep → narrowed to Glass Deep + Quiet Focus; round 2: four calm-glass palette temperatures). Throwaway prototypes on `spike/design-directions` (`DDCalmGlass.swift` + renders).
+
+**Adopting true iOS 26 Liquid Glass (owner decision).** PR1 raises `IPHONEOS_DEPLOYMENT_TARGET` **18.2 → 26** and uses the native `glassEffect` API. **Tradeoff: drops users on iOS 18–25.** Needs an explicit go/no-go at PR1 start and an iOS 26 simulator available in CI. Until that lands, the build/run notes below still reflect the iOS 18.2 floor.
+
 ## Pre-steps (do before Phase 0)
 
 1. **Validate the render→screenshot loop with a one-view spike.** Confirm we can render a single SwiftUI view variant and produce light + dark screenshots end-to-end before investing in full prototypes. Screenshots from **SwiftUI Previews with mock data** are acceptable (no need to drive the running app into a live-session state).
@@ -84,6 +95,8 @@ Redesign `ReportsView` (header, filter buttons, segmented chart toggle, summary 
 - **Token discipline relies on review** (no automated lint added — issue #9 left open). Watch for hardcoded colors/spacing/`.tint(...)` creeping back into `Modules/`; that's the exact problem being fixed.
 - New colorsets must avoid generated-symbol collisions (lesson from `PrimaryColor`→`BrandPrimary`).
 - SourceKit in this session throws false "Cannot find type / No such module" diagnostics (Task shadowing, cross-file) — `xcodebuild` is the authority, not the live indexer.
+- **iOS 26 Liquid Glass (`glassEffect`) is the chosen surface treatment** — verify real-device/simulator rendering and performance (especially on the dense task list and the timer ring glow) early in PR1; the Phase-0 prototypes only *approximate* glass.
+- **`ImageRenderer` (the Phase-0 screenshot loop) does NOT render `ScrollView` content or composite real Liquid Glass / `.ultraThinMaterial` blur** — use plain stacks and translucent-fill approximations in any preview-render harness; capture true glass via the simulator instead.
 
 ## Decisions log (from plan review)
 1. Screenshots from SwiftUI Previews with mock data are fine. → Phase 0 / Pre-step 1.
@@ -94,8 +107,12 @@ Redesign `ReportsView` (header, filter buttons, segmented chart toggle, summary 
 6. Remove the `Done Pomodoro copy` target as a pre-step. → Pre-step 2.
 7. Fully support light + dark. → throughout.
 8. Accessibility as explicit per-screen criteria. → Verification.
-9. CI lint for hardcoded values — **left open** (no decision); relying on review for now.
+9. CI lint for hardcoded values — **shipped** (PR #19): zero-dependency grep with a baseline; **advisory now, blocking from PR2**. (Was "left open"; review is still the backstop until PR2.)
 10. Tokens namespaced under `Constants`. → Phase 1.
 11. App icon — **out of scope.**
 12. Chart performance check (~30 tasks). → Phase 3.
 13. Commit the plan doc. → done on `docs/redesign-plan` branch.
+14. **Phase 0 direction = "Calm Glass · Neutral + task-accent"** (calm Liquid Glass; each task's own color is the accent; SF Rounded, no serif; both modes equal; subtle depth). → Status.
+15. **Adopt true iOS 26 Liquid Glass** → raise deployment target 18.2 → 26 (drops iOS 18–25), use native `glassEffect`, CI needs an iOS 26 sim. Final go/no-go at PR1 start. → Status / Notes.
+16. **CI lint shipped** (resolves #9): zero-dependency grep, advisory now, blocking from PR2. → Status.
+17. Per-screen "Definition of Done" (#4) — still **deferred**.

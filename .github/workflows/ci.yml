@@ -27,23 +27,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Show selected Xcode
-        run: xcodebuild -version
+      # The app now targets iOS 26 (Liquid Glass), so CI needs an Xcode that
+      # ships the iOS 26 SDK. Select the newest installed Xcode; if none beats
+      # the default, fall back to it. Print versions + runtimes for diagnostics.
+      - name: Select newest Xcode
+        run: |
+          set -euo pipefail
+          NEWEST=$(ls -d /Applications/Xcode_*.app 2>/dev/null | sort -V | tail -1 || true)
+          if [ -n "$NEWEST" ]; then
+            echo "Selecting $NEWEST"
+            sudo xcode-select -s "$NEWEST/Contents/Developer"
+          fi
+          xcodebuild -version
+          echo "--- installed iOS runtimes ---"
+          xcrun simctl list runtimes | grep -i ios || true
 
-      # Pick a concrete iOS simulator at runtime so the workflow survives
-      # GitHub bumping the runner image (device names / OS versions drift).
-      # The project's deployment target is iOS 18.2, so any installed iPhone
-      # on the runner's bundled iOS 18+ runtime is valid.
-      - name: Select an iOS Simulator
+      # Pick a concrete iOS 26 simulator at runtime. The deployment target is
+      # iOS 26, so the test destination must be an iOS 26 runtime — an older
+      # runtime would fail to install the app.
+      - name: Select an iOS 26 Simulator
         run: |
           set -euo pipefail
           UDID=$(xcrun simctl list devices available --json \
             | python3 -c "import json,sys;
           data=json.load(sys.stdin)['devices'];
-          cands=[d for rt,ds in data.items() if 'iOS' in rt for d in ds if d['isAvailable'] and 'iPhone' in d['name']];
+          cands=[d for rt,ds in data.items() if 'iOS-26' in rt for d in ds if d['isAvailable'] and 'iPhone' in d['name']];
           print(cands[-1]['udid'] if cands else '')")
           if [ -z "$UDID" ]; then
-            echo "::error::No available iPhone simulator found on the runner"
+            echo "::error::No available iOS 26 iPhone simulator on the runner (the app requires iOS 26)."
             xcrun simctl list devices available
             exit 1
           fi

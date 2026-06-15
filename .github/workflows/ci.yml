@@ -78,3 +78,21 @@ jobs:
           name: test-results
           path: TestResults.xcresult
           if-no-files-found: ignore
+
+  # Design-token guard for the visual redesign (docs/redesign-plan.md #9).
+  # Zero-dependency bash/grep, so it runs on cheap Linux — no Xcode needed.
+  design-lint:
+    name: Design-token lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run design-lint
+        # Advisory until PR2: it reports newly introduced hardcoded styling
+        # values but does NOT fail the build yet. Flip to "true" at the start
+        # of PR2 — once the Phase-1 tokens have survived the task list and are
+        # locked — to make new violations block CI.
+        env:
+          DESIGN_LINT_BLOCKING: "false"
+        run: scripts/design-lint.sh

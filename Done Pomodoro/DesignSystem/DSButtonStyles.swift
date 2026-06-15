@@ -28,11 +28,13 @@ private struct DSGlassButton: View {
     }
 }
 
-/// Primary action — tinted by the current task's color (pass `taskColor`).
+/// Primary action — a SUBTLE wash of the current task's color (pass `taskColor`).
+/// Faint by design: it ties the main action to the active task while keeping the
+/// calm/neutral direction (the saturated color lives in the ring, not the button).
 struct DSPrimaryButtonStyle: ButtonStyle {
     var tint: Color?
     func makeBody(configuration: Configuration) -> some View {
-        DSGlassButton(configuration: configuration, tint: tint)
+        DSGlassButton(configuration: configuration, tint: tint?.opacity(0.32))
     }
 }
 
